@@ -24,17 +24,27 @@ class All_buttons extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
-              onTap: () => runApp(MyPerfil()),
+              onTap: () => Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => MyApp()
+                )
+              ),
               child: Image.asset(
                 'imagens/pedra.png',
-                height: 90,
+                height: 50,
               ),
             ),
             GestureDetector(
-              onTap: () => runApp(MyApp()),
+              onTap: () => Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => MyPerfil()
+                )
+              ),
               child: Image.asset(
                 'imagens/papel.png',
-                height: 90,
+                height: 50,
               ),
             ),
             // GestureDetector(
