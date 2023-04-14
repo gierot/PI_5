@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:app_vtr/perfil/perfil.dart';
+import 'package:app_vtr/buttons.dart';
 
 void main() {
   runApp(const MyApp());
@@ -37,6 +39,16 @@ class _MyHomePageState extends State<MyHomePage> {
       _counter++;
     });
   }
+  void Open_perfil(){
+    setState(() {
+      Navigator.push(
+        context, 
+        MaterialPageRoute(
+          builder: (context) => MyPerfil()
+        )
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -55,14 +67,15 @@ class _MyHomePageState extends State<MyHomePage> {
               '$_counter',
               style: Theme.of(context).textTheme.headlineMedium,
             ),
+            All_buttons(),
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: const Icon(Icons.add),
-      ),
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: Open_perfil,
+      //   tooltip: 'Increment',
+      //   child: const Icon(Icons.add),
+      // ),
     );
   }
 }
