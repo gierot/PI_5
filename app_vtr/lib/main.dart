@@ -56,7 +56,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ), 
             ),
             Container(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: 8),
+              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
               child: const Text('Acessar sua conta', style: TextStyle(color: Colors.white),),
             ),
             Padding(
@@ -101,7 +102,7 @@ class _MyHomePageState extends State<MyHomePage> {
               child:const Text('Entrar', style: TextStyle(color: Colors.white),),
             ),
             Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 24),
+              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
               child:Row(
                 mainAxisAlignment:MainAxisAlignment.center,
                 children: [
@@ -129,8 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
@@ -140,13 +141,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset('imagens/google.png', height: 20, width: 20,),
-                  const Text('Login com Google', style:TextStyle(fontSize: 12))
+                  const Text('Login com Google', style:TextStyle(fontSize: 14))
                 ],
               ),
             ),
             Container(
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
+              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
               decoration: BoxDecoration(
                 border: Border.all(color: Colors.black),
                 borderRadius: BorderRadius.circular(10),
@@ -156,7 +157,7 @@ class _MyHomePageState extends State<MyHomePage> {
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   Image.asset('imagens/outlook.png', height: 20, width: 20,),
-                  const Text('Login com Outlook', style: TextStyle(fontSize: 12),)
+                  const Text('Login com Outlook', style: TextStyle(fontSize: 14),)
                 ],
               ),
             ),
