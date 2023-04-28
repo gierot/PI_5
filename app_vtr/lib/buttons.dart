@@ -19,9 +19,8 @@ class All_buttons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-        child:Row(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+    return Row(
+        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             GestureDetector(
               onTap: () => Navigator.push(
@@ -31,7 +30,7 @@ class All_buttons extends StatelessWidget {
                 )
               ),
               child: Image.asset(
-                'imagens/pedra.png',
+                'imagens/indefinido.png',
                 height: 50,
               ),
             ),
@@ -43,19 +42,35 @@ class All_buttons extends StatelessWidget {
                 )
               ),
               child: Image.asset(
-                'imagens/papel.png',
+                'imagens/indefinido.png',
                 height: 50,
               ),
             ),
-            // GestureDetector(
-            //   onTap: () => _iniciaJogada("tesoura"),
-            //   // child: Image.asset(
-            //   //   'imagens/tesoura.png',
-            //   //   height: 90,
-            //   // ),
-            // ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => MyPerfil()
+                )
+              ),
+              child: Image.asset(
+                'imagens/indefinido.png',
+                height: 50,
+              ),
+            ),
+            GestureDetector(
+              onTap: () => Navigator.push(
+                context, 
+                MaterialPageRoute(
+                  builder: (context) => MyPerfil()
+                )
+              ),
+              child: Image.asset(
+                'imagens/indefinido.png',
+                height: 50,
+              ),
+            ),
           ],
-      )
-    );
+      );
   }
 }
