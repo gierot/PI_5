@@ -61,7 +61,7 @@ String _fileContent = '';
               children:  [
                 const Padding(
                   padding: EdgeInsets.symmetric(vertical:10),
-                  child: Text('Vtr Efects', style: TextStyle(color: Colors.white, fontSize: 16),),
+                  child: Text('Vtr Efects', style: TextStyle(color: Color(0xFFbdb113), fontSize: 16),),
                 ),
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10),

@@ -1,3 +1,4 @@
+import 'package:app_vtr/about/about.dart';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 
@@ -52,6 +53,7 @@ class _LoginPage extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(
+                style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: border_color),
@@ -68,6 +70,8 @@ class _LoginPage extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(
+                obscureText: true,
+                style:const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: border_color),
@@ -81,14 +85,19 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.all(10),
-              padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                color: const Color(0xFFbdb133),
+            GestureDetector(
+              onTap: () =>  Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const About())),
+              child: Container(
+                margin: const EdgeInsets.all(10),
+                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(10),
+                  color: const Color(0xFFbdb133),
+                ),
+                child:const Text('Entrar', style: TextStyle(color: Colors.white),),
+                
               ),
-              child:const Text('Entrar', style: TextStyle(color: Colors.white),),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
