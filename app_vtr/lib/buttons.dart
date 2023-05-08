@@ -14,7 +14,7 @@ class All_buttons extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
-              'imagens/indefinido.png',
+              'imagens/10.png',
               height: 50,
             ),
           ),
@@ -22,7 +22,7 @@ class All_buttons extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Contact())),
             child: Image.asset(
-              'imagens/papel.png',
+              'imagens/06.png',
               height: 50,
             ),
           ),
@@ -30,7 +30,7 @@ class All_buttons extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
-              'imagens/indefinido.png',
+              'imagens/05.png',
               height: 50,
             ),
           ),
@@ -38,7 +38,7 @@ class All_buttons extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const About())),
             child: Image.asset(
-              'imagens/indefinido.png',
+              'imagens/09.png',
               height: 50,
             ),
           ),
@@ -46,7 +46,7 @@ class All_buttons extends StatelessWidget {
             onTap: () => Navigator.push(context,
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
-              'imagens/indefinido.png',
+              'imagens/17.png',
               height: 50,
             ),
           ),

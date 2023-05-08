@@ -68,8 +68,9 @@ String _fileContent = '';
                   child: Text(_fileContent, style: const TextStyle(color: Colors.white, fontSize: 10),),
                 ),
                 const YoutubePlayerScreen(linkvideo: 'https://youtu.be/shH6FgfZQUM'),
-                Padding(
+                Container(
                   padding: const EdgeInsets.symmetric(horizontal: 10),
+                  margin: const EdgeInsets.symmetric(vertical:10),
                   child: Row(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -81,7 +82,7 @@ String _fileContent = '';
                         ),
                       ),
                       const SizedBox(width:8),
-                      Image.asset('imagens/indefinido.png', height: 80, width: 80,)
+                      Image.asset('imagens/pedal.png', height: 80)
                     ],
                   ),
                 ),
@@ -89,19 +90,27 @@ String _fileContent = '';
                   padding: const EdgeInsets.symmetric(horizontal: 10),
                   child: Center(
                     child: Column( children:[
-                      Image.asset('imagens/logo.png', height: 50),
-                      const SizedBox(height:8),
+                      const SizedBox(height:15),
                       const Text('Visão', style: TextStyle(color: Colors.white, fontSize: 18),),
-                      const SizedBox(height:8),
+                      const SizedBox(height:15),
                       const Text(
                         '“Superar as expectativas do mercado com nossos produtos, inspirando músicos onde quer que estejam.”',
                         style: TextStyle(color: Colors.white, fontSize: 10,),
                         textAlign: TextAlign.center,
+                      ),
+                      const SizedBox(height:15),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Image.asset('imagens/kailane.png', height: 70),
+                          Image.asset('imagens/narcizo.png', height: 70),
+                        ]
                       )
+                      
                     ])
                   ),
                 ),
-                const Padding(padding: EdgeInsets.symmetric(vertical: 30 )),
+                const Padding(padding: EdgeInsets.symmetric(vertical: 40 )),
               ],
             ),
           )
