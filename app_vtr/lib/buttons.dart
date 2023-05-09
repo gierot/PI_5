@@ -15,7 +15,7 @@ class All_buttons extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
               'imagens/10.png',
-              height: 50,
+              height: 40,
             ),
           ),
           GestureDetector(
@@ -23,7 +23,7 @@ class All_buttons extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Contact())),
             child: Image.asset(
               'imagens/06.png',
-              height: 50,
+              height: 40,
             ),
           ),
           GestureDetector(
@@ -31,7 +31,7 @@ class All_buttons extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
               'imagens/05.png',
-              height: 50,
+              height: 40,
             ),
           ),
           GestureDetector(
@@ -39,7 +39,7 @@ class All_buttons extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const About())),
             child: Image.asset(
               'imagens/09.png',
-              height: 50,
+              height: 40,
             ),
           ),
           GestureDetector(
@@ -47,7 +47,7 @@ class All_buttons extends StatelessWidget {
                 MaterialPageRoute(builder: (context) => const Perfil())),
             child: Image.asset(
               'imagens/17.png',
-              height: 50,
+              height: 40,
             ),
           ),
         ],

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
+import 'package:app_vtr/setting.dart';
+
+Settings settings = Settings();
 
 class Perfil extends StatelessWidget {
   const Perfil({super.key});
@@ -23,10 +26,19 @@ class Perfil_user extends State<MyPerfil> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Top(),
-      backgroundColor: const Color(0xFF04121F),
+      backgroundColor: settings.getColor('background'),
       //body: ,
-      floatingActionButton: All_buttons(),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      bottomNavigationBar: BottomAppBar(
+          color: settings.getColor('background'),
+          height: 40,
+          child: Center(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 15.0,
+              children: <Widget>[All_buttons()],
+            ),
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }
