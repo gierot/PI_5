@@ -25,7 +25,7 @@ class ContactPage extends StatefulWidget {
 
 class _ContactPage extends State<ContactPage> {
   int contador = 0;
-  void send_message() {
+  void sendMessage() {
     contador++;
   }
 
@@ -72,7 +72,7 @@ class _ContactPage extends State<ContactPage> {
             ),
           ),
           GestureDetector(
-              onTap: () => send_message(),
+              onTap: () => sendMessage(),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
