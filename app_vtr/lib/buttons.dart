@@ -15,7 +15,8 @@ class All_buttons extends StatelessWidget {
         children: [
           GestureDetector(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Perfil())),
+              MaterialPageRoute(builder: (context) => const Perfil())
+            ),
             child: Image.asset(
               'imagens/10.png',
               height: 40,
@@ -23,7 +24,8 @@ class All_buttons extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Contact())),
+              MaterialPageRoute(builder: (context) => const Contact())
+            ),
             child: Image.asset(
               'imagens/06.png',
               height: 40,
@@ -39,7 +41,8 @@ class All_buttons extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const About())),
+              MaterialPageRoute(builder: (context) => const About())
+            ),
             child: Image.asset(
               'imagens/09.png',
               height: 40,
@@ -47,7 +50,8 @@ class All_buttons extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Forum())),
+              MaterialPageRoute(builder: (context) => const Forum())
+            ),
             child: Image.asset(
               'imagens/17.png',
               height: 40,

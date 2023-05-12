@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:app_vtr/contact/contact.dart';
 
 Settings settings = Settings();
 
@@ -45,12 +46,19 @@ class Perfil_user extends State<MyPerfil> {
                 ],
               ) ,
             ),
-            // Container(
-            //   padding: const EdgeInsets.symmetric(vertical: 20),
-            //   child: GestureDetector(
-            //     onTap: () =>,
-            //   )
-            // ),
+            Container(
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                color: settings.getColor('green_btn')
+              ),
+              padding: const EdgeInsets.symmetric(vertical: 15, horizontal: 40),
+              child: GestureDetector(
+                onTap: ()=> Navigator.push(context,
+                  MaterialPageRoute(builder: (context) => const Contact())
+                ),
+                child: const Text('Meus produtos', style: TextStyle(color: Colors.white),),
+              )
+            ),
             // Container(
             //   padding: const EdgeInsets.symmetric(vertical: 20),
             //   child: GestureDetector(

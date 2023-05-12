@@ -116,7 +116,7 @@ class _LoginPage extends State<LoginPage> {
                     padding: const EdgeInsets.symmetric(horizontal: 16),
                     child: RichText(
                       text: const TextSpan(
-                        text: 'OU',
+                        text: 'OU', style: TextStyle(color: Colors.white)
                       ),
                     )
                   ),
