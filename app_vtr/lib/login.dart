@@ -1,8 +1,11 @@
 import 'package:app_vtr/about/about.dart';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
-import 'package:oauth2/oauth2.dart' as oauth2;
+import 'package:app_vtr/register.dart';
+import 'package:app_vtr/setting.dart';
+import 'package:http/http.dart' as http;
 
+Settings settings = Settings();
 
 class Login extends StatelessWidget {
   const Login({super.key});
@@ -27,6 +30,20 @@ class _LoginPage extends State<LoginPage> {
   int _counter = 0;
   Color border_color = Colors.white;
 
+  TextEditingController login = TextEditingController();
+  TextEditingController password = TextEditingController();
+
+  void verifyAccount() {
+    Map<String, String> body = {'email': login.text, 'password': password.text};
+
+    var response = settings.getAccountData(body);
+    if (response) {
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const About())
+      );
+    } else {}
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,24 +62,28 @@ class _LoginPage extends State<LoginPage> {
               child: Image.asset(
                 'imagens/user.png',
                 height: 24,
-              ), 
+              ),
             ),
             Container(
               margin: const EdgeInsets.symmetric(vertical: 8),
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-              child: const Text('Acessar sua conta', style: TextStyle(color: Colors.white),),
+              child: const Text(
+                'Acessar sua conta',
+                style: TextStyle(color: Colors.white),
+              ),
             ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(
-                style:const TextStyle(color: Colors.white),
+                controller: login,
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: border_color),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   labelText: 'Email',
-                  labelStyle:const TextStyle(
+                  labelStyle: const TextStyle(
                     fontSize: 12.0,
                     color: Colors.white, // define a cor do rótulo
                   ),
@@ -73,7 +94,7 @@ class _LoginPage extends State<LoginPage> {
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(
                 obscureText: true,
-                style:const TextStyle(color: Colors.white),
+                style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(
                   border: OutlineInputBorder(
                     borderSide: BorderSide(color: border_color),
@@ -87,24 +108,45 @@ class _LoginPage extends State<LoginPage> {
                 ),
               ),
             ),
-            GestureDetector(
-              onTap: () =>  Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const About())),
-              child: Container(
-                margin: const EdgeInsets.all(10),
-                padding: const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: const Color(0xFFbdb133),
+            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+              GestureDetector(
+                onTap: () => verifyAccount(),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFFbdb133),
+                  ),
+                  child: const Text(
+                    'Entrar',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 ),
-                child:const Text('Entrar', style: TextStyle(color: Colors.white),),
-                
               ),
-            ),
+              GestureDetector(
+                onTap: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Register())),
+                child: Container(
+                  margin: const EdgeInsets.all(10),
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: const Color(0xFF3BCF3E),
+                  ),
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              )
+            ]),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              child:Row(
-                mainAxisAlignment:MainAxisAlignment.center,
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   const Expanded(
                     child: Divider(
@@ -113,13 +155,11 @@ class _LoginPage extends State<LoginPage> {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    child: RichText(
-                      text: const TextSpan(
-                        text: 'OU', style: TextStyle(color: Colors.white)
-                      ),
-                    )
-                  ),
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: RichText(
+                        text: const TextSpan(
+                            text: 'OU', style: TextStyle(color: Colors.white)),
+                      )),
                   const Expanded(
                     child: Divider(
                       color: Colors.white,
@@ -137,11 +177,15 @@ class _LoginPage extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
-              child:Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset('imagens/google.png', height: 20, width: 20,),
-                  const Text('Login com Google', style:TextStyle(fontSize: 14))
+                  Image.asset(
+                    'imagens/google.png',
+                    height: 20,
+                    width: 20,
+                  ),
+                  const Text('Login com Google', style: TextStyle(fontSize: 14))
                 ],
               ),
             ),
@@ -153,11 +197,18 @@ class _LoginPage extends State<LoginPage> {
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
-              child:Row(
+              child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  Image.asset('imagens/outlook.png', height: 20, width: 20,),
-                  const Text('Login com Outlook', style: TextStyle(fontSize: 14),)
+                  Image.asset(
+                    'imagens/outlook.png',
+                    height: 20,
+                    width: 20,
+                  ),
+                  const Text(
+                    'Login com Outlook',
+                    style: TextStyle(fontSize: 14),
+                  )
                 ],
               ),
             ),
