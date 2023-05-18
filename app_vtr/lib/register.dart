@@ -1,3 +1,4 @@
+import 'package:app_vtr/about/about.dart';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/setting.dart';
@@ -30,7 +31,7 @@ class _RegisterPage extends State<RegisterPage> {
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  void registerUser() {
+  void registerUser() async {
     Map<String, String> body = {
       'email': email.text,
       'name': name.text,
@@ -39,7 +40,15 @@ class _RegisterPage extends State<RegisterPage> {
       'cpfcnpj': id_people.text,
     };
 
-    settings.registerUser(body);
+    var response = await settings.registerUser(body);
+    if(response == false){
+      Navigator.push(context,MaterialPageRoute(builder: (context) => const About()));
+    }
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: const Text('Ocorreu um erro. Por favor, tente novamente.'),
+      ),
+    );
   }
 
   @override

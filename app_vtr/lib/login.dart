@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/register.dart';
 import 'package:app_vtr/setting.dart';
-import 'package:http/http.dart' as http;
 
 Settings settings = Settings();
 
@@ -33,15 +32,30 @@ class _LoginPage extends State<LoginPage> {
   TextEditingController login = TextEditingController();
   TextEditingController password = TextEditingController();
 
-  void verifyAccount() {
+  void verifyAccount() async {
     Map<String, String> body = {'email': login.text, 'password': password.text};
 
-    var response = settings.getAccountData(body);
-    if (response) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const About())
+    var response = await settings.getAccountData(body);
+    if (!response) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          behavior: SnackBarBehavior.floating,
+          backgroundColor: Colors.red,
+          content: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 0),
+            width: 300, // Define um tamanho fixo para o SnackBar
+            child: const Text(
+              'Login/Senha incorretos.\nPor favor, tente novamente.', 
+              textAlign:TextAlign.center,
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ),
       );
-    } else {}
+      return;
+    }
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const About()));
   }
 
   @override
@@ -93,6 +107,7 @@ class _LoginPage extends State<LoginPage> {
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(
+                controller: password,
                 obscureText: true,
                 style: const TextStyle(color: Colors.white),
                 decoration: InputDecoration(

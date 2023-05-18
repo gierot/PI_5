@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:app_vtr/data_user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+DataUser user_vtr = DataUser();
+
 class Settings {
-  String url = 'http://0.0.0.0:8000';
+  String url = 'http://0.0.0.0:8000/api';
   Map<String, String> headers = {'Content-Type': 'application/json'};
 
   var all_colors = {
@@ -16,12 +19,27 @@ class Settings {
     return all_colors[color];
   }
 
-  getAccountData(data) {
-    return true;
+  getAccountData(Map<String, String> data) async {
+    http.Response response = await http.post(Uri.parse(url + '/login'),
+        headers: headers, body: jsonEncode(data));
+
+    if (response.statusCode == 200) {
+      var user = jsonDecode(response.body);
+      user_vtr.setToken(user['token']);
+      return true;
+    }
+    return false;
   }
 
   registerUser(Map<String, String> data) async {
     http.Response response = await http.post(Uri.parse(url + '/register'),
         headers: headers, body: jsonEncode(data));
+
+    if (response.statusCode == 200) {
+      var user = jsonDecode(response.body);
+      user_vtr.setToken(user['token']);
+      return true;
+    }
+    return false;
   }
 }
