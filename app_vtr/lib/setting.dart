@@ -42,4 +42,13 @@ class Settings {
     }
     return false;
   }
+
+  getProducts() async {
+    String token = user_vtr.getToken();
+    Uri rota = (token == null
+        ? Uri.parse(url + '/produtos')
+        : Uri.parse(url + '/auth/produtos'));
+    
+    
+  }
 }

@@ -41,7 +41,7 @@ class _RegisterPage extends State<RegisterPage> {
     };
 
     var response = await settings.registerUser(body);
-    if(response == false){
+    if(!response){
       Navigator.push(context,MaterialPageRoute(builder: (context) => const About()));
     }
     ScaffoldMessenger.of(context).showSnackBar(

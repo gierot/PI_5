@@ -45,8 +45,8 @@ class _LoginPage extends State<LoginPage> {
             padding: const EdgeInsets.symmetric(horizontal: 0),
             width: 300, // Define um tamanho fixo para o SnackBar
             child: const Text(
-              'Login/Senha incorretos.\nPor favor, tente novamente.', 
-              textAlign:TextAlign.center,
+              'Login/Senha incorretos.\nPor favor, tente novamente.',
+              textAlign: TextAlign.center,
               style: TextStyle(color: Colors.white, fontSize: 16),
             ),
           ),
