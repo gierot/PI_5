@@ -44,11 +44,12 @@ class Settings {
   }
 
   getProducts() async {
-    String token = user_vtr.getToken();
-    Uri rota = (token == null
-        ? Uri.parse(url + '/produtos')
-        : Uri.parse(url + '/auth/produtos'));
-    
-    
+    Uri rota = Uri.parse(url + '/produtos');
+    http.Response response = await http.get(rota);
+
+    if (response.statusCode == 200) {
+      var teste = await jsonDecode(response.body);
+      return teste['data'];
+    }
   }
 }

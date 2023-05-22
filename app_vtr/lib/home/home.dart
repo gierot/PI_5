@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:app_vtr/home/product.dart';
 
 Settings settings = Settings();
 
@@ -24,32 +25,54 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePage extends State<HomePage> {
-  final List<String> nomes = ['João', 'Maria', 'Pedro', 'Gustavo'];
+  List<dynamic> products = [];
+
+  @override
+  void initState() {
+    super.initState();
+    loadProducts();
+  }
+
+  void loadProducts() async {
+    List<dynamic> values = await settings.getProducts();
+    setState(() {
+      products = values;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: settings.getColor('background'),
       appBar: Top(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(children: 
-            nomes.map((nome) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal:40, vertical: 10),
-                padding: const EdgeInsets.symmetric(vertical:25, horizontal:40),
-                decoration: const BoxDecoration(color: Colors.white),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset('imagens/09.png', height: 50,),
-                    Text(nome, style: const TextStyle(color: Colors.black),)
-                  ]
-                ),
-              );
-            }).toList()
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: products.length,
+        itemBuilder: (context, index) {
+          dynamic item = products[index];
+          return Container(
+            margin: const EdgeInsets.symmetric(vertical: 30),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(item['nome'].toString(), style: const TextStyle(color: Colors.white)),
+                GestureDetector(
+                  onTap: () => 
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => 
+                      Product(
+                        item['nome'].toString(),
+                        item['descricao'].toString(),
+                        item['caminho'].toString(),
+                        item['link_video'].toString(),
+                        item['link'].toString()
+                      )
+                    )
+                  ),
+                  child: Image.network(item['caminho'], height: 150,),
+                )
+              ],
+            )
+          );
+        },
       ),
       bottomNavigationBar: BottomAppBar(
           color: settings.getColor('background'),
