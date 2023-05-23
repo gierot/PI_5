@@ -25,7 +25,8 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-      user_vtr.setToken(user['token']);
+      user_vtr.setToken(user['token'], user['nome'], user['id'].toString(),
+          user['telefone'], user['email']);
       return true;
     }
     return false;
@@ -37,7 +38,6 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-      user_vtr.setToken(user['token']);
       return true;
     }
     return false;
@@ -50,6 +50,39 @@ class Settings {
     if (response.statusCode == 200) {
       var teste = await jsonDecode(response.body);
       return teste['data'];
+    }
+  }
+
+  getManual(id_produto) async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/manuais/?product_id=' + id_produto.toString());
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+
+    http.Response response = await http.get(rota, headers: header);
+    if (response.statusCode == 200) {
+      var retorno = await jsonDecode(response.body);
+      return retorno['data'].toString();
+    }
+  }
+
+  getGarantia() async {
+    String token = await user_vtr.getToken('token');
+    String id = await user_vtr.getToken('id');
+    print(id);
+    Uri rota = Uri.parse(url + '/garantias/');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+
+    http.Response response = await http.get(rota, headers: header);
+    if (response.statusCode == 200) {
+      var retorno = await jsonDecode(response.body);
+      print(retorno);
+      return retorno['data'].toString();
     }
   }
 }

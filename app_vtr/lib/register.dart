@@ -1,4 +1,4 @@
-import 'package:app_vtr/about/about.dart';
+import 'package:app_vtr/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/setting.dart';
@@ -42,7 +42,7 @@ class _RegisterPage extends State<RegisterPage> {
 
     var response = await settings.registerUser(body);
     if(!response){
-      Navigator.push(context,MaterialPageRoute(builder: (context) => const About()));
+      Navigator.push(context,MaterialPageRoute(builder: (context) => const Login()));
     }
     ScaffoldMessenger.of(context).showSnackBar(
       SnackBar(

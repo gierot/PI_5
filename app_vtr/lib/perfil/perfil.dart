@@ -8,6 +8,8 @@ import 'package:app_vtr/login.dart';
 
 DataUser user_vtr = DataUser();
 Settings settings = Settings();
+// String name = user_vtr.getToken('nome');
+//String email = user_vtr.getToken('email');
 
 class Perfil extends StatelessWidget {
   const Perfil({super.key});
@@ -28,8 +30,17 @@ class MyPerfil extends StatefulWidget {
 class Perfil_user extends State<MyPerfil> {
   logout() {
     user_vtr.destroyUser();
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const Login()));
+    Navigator.push(
+        context, MaterialPageRoute(builder: (context) => const Login()));
   }
+  // @override
+  // void initState() async {
+  //   super.initState();
+  //   setState(() async {
+  //     name = await user_vtr.getToken('nome');
+  //     email = await  user_vtr.getToken('email');
+  //   });
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -51,8 +62,8 @@ class Perfil_user extends State<MyPerfil> {
                   'imagens/25.png',
                   height: 30,
                 ),
-                const Text('testando a aplicação',
-                    style: TextStyle(color: Colors.white, fontSize: 18)),
+                Text('teste',
+                    style: const TextStyle(color: Colors.white, fontSize: 18)),
                 Image.asset(
                   'imagens/25.png',
                   height: 30,
@@ -100,27 +111,23 @@ class Perfil_user extends State<MyPerfil> {
             ],
           ),
           Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.red),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTap: () => logout(),
-                //Navigator.push(context,
-                //    MaterialPageRoute(builder: (context) => const Contact())),
-                child: const Text(
-                  'Sair',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )),
-          // Container(
-          //   padding: const EdgeInsets.symmetric(vertical: 20),
-          //   child: GestureDetector(
-
-          //   ),
-          // )
+            decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10), color: Colors.red),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            child: GestureDetector(
+              onTap: () => logout(),
+              //Navigator.push(context,
+              //    MaterialPageRoute(builder: (context) => const Contact())),
+              child: const Text(
+                'Sair',
+                style: TextStyle(color: Colors.white),
+              ),
+            )
+          ),
         ],
-      )),
+      )
+      ),
       bottomNavigationBar: BottomAppBar(
           color: settings.getColor('background'),
           height: 40,

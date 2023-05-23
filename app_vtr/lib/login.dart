@@ -26,7 +26,6 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPage extends State<LoginPage> {
-  int _counter = 0;
   Color border_color = Colors.white;
 
   TextEditingController login = TextEditingController();
