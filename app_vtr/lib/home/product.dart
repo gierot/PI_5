@@ -118,9 +118,9 @@ class _ProductPage extends State<ProductPage> {
           ),
           Image.network(widget.image, height: 100),
           Container(
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              child: Text(widget.info_text,
-                  style: const TextStyle(color: Colors.white))),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            child: Text(widget.info_text, style: const TextStyle(color: Colors.white))
+          ),
           YoutubePlayerScreen(linkvideo: widget.link_video),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,

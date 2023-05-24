@@ -24,7 +24,7 @@ class YoutubePlayerScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final linkvideo = getIdVideo();
     final controller = YoutubePlayerController(
-      initialVideoId: linkvideo,
+      initialVideoId: linkvideo.toString(),
       flags: const YoutubePlayerFlags(
         autoPlay: false,
         mute: false,
@@ -32,8 +32,19 @@ class YoutubePlayerScreen extends StatelessWidget {
     );
 
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 10, vertical:10 ),
-      child: YoutubePlayer(controller: controller),
+      padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+      child: YoutubePlayer(
+        controller: controller,
+        showVideoProgressIndicator: true,
+        // videoProgressIndicatorColor: Colors.amber,
+        // progressColors: ProgressColors(
+        //     playedColor: Colors.amber,
+        //     handleColor: Colors.amberAccent,
+        // ),
+        // onReady () {
+        //     _controller.addListener(listener);
+        // },
+      ),
     );
   }
 }
