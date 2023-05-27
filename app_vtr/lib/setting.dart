@@ -70,7 +70,6 @@ class Settings {
 
   getGarantia() async {
     String token = await user_vtr.getToken('token');
-    String id = await user_vtr.getToken('id');
     Uri rota = Uri.parse(url + '/garantias/');
     Map<String, String> header = {
       'Content-Type': 'application/json',
@@ -80,7 +79,22 @@ class Settings {
     http.Response response = await http.get(rota, headers: header);
     if (response.statusCode == 200) {
       var retorno = await jsonDecode(response.body);
-      return retorno['data'].toString();
+      return retorno['data'];
+    }
+  }
+
+  getProductsUser() async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/auth/produtos');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(rota, headers: header);
+
+    if (response.statusCode == 200) {
+      var retorno = await jsonDecode(response.body);
+      return retorno['data'];
     }
   }
 }

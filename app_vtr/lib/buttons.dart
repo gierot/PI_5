@@ -33,7 +33,7 @@ class All_buttons extends StatelessWidget {
           ),
           GestureDetector(
             onTap: () => Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const Home())),
+                MaterialPageRoute(builder: (context) => const Home(0))),
             child: Image.asset(
               'imagens/05.png',
               height: 40,

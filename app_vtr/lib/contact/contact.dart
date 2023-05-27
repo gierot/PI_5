@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Settings settings = Settings();
 
@@ -25,9 +26,17 @@ class ContactPage extends StatefulWidget {
 
 class _ContactPage extends State<ContactPage> {
   int contador = 0;
-  void sendMessage() {
-    contador++;
+
+  void redirectUser() async {
+    var url = 'gierot@ucl.br';
+    if (await canLaunch(url)) {
+      await launch(url);
+    } else {
+      throw 'Não foi possível abrir o link $url';
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +81,7 @@ class _ContactPage extends State<ContactPage> {
             ),
           ),
           GestureDetector(
-              onTap: () => sendMessage(),
+              onTap: () => redirectUser(),
               child: Container(
                 padding:
                     const EdgeInsets.symmetric(vertical: 15, horizontal: 50),

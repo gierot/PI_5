@@ -7,18 +7,21 @@ import 'package:app_vtr/home/product.dart';
 Settings settings = Settings();
 
 class Home extends StatelessWidget {
-  const Home({super.key});
+  final int is_user;
+
+  const Home(this.is_user);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: HomePage(),
+    return MaterialApp(
+      home: HomePage(is_user),
     );
   }
 }
 
 class HomePage extends StatefulWidget {
-  const HomePage({super.key});
+  final int is_user;
+  const HomePage(this.is_user);
 
   @override
   State<HomePage> createState() => _HomePage();
@@ -30,11 +33,18 @@ class _HomePage extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    loadProducts();
+    widget.is_user == 0 ? loadProducts() : loadProductsUser();
   }
 
   void loadProducts() async {
     List<dynamic> values = await settings.getProducts();
+    setState(() {
+      products = values;
+    });
+  }
+
+  void loadProductsUser() async {
+    List<dynamic> values = await settings.getProductsUser();
     setState(() {
       products = values;
     });
@@ -50,28 +60,34 @@ class _HomePage extends State<HomePage> {
         itemBuilder: (context, index) {
           dynamic item = products[index];
           return Container(
-            margin: const EdgeInsets.symmetric(vertical: 30),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                Text(item['nome'].toString(), style: const TextStyle(color: Colors.white)),
-                GestureDetector(
-                  onTap: () => 
-                    Navigator.push(context, MaterialPageRoute(builder: (context) => 
-                      Product(
-                        item['nome'].toString(),
-                        item['descricao'].toString(),
-                        item['caminho'].toString(),
-                        item['link_video'].toString(),
-                        item['link'].toString()
-                      )
-                    )
-                  ),
-                  child: Image.network(item['caminho'], height: 150,),
-                )
-              ],
-            )
-          );
+              margin: const EdgeInsets.symmetric(vertical: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(item['nome'].toString(),
+                      style: const TextStyle(color: Colors.white)),
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (context) => Product(
+                              widget.is_user == 0 ? item['id'] : item['usuario_produto_id'],
+                              item['nome'].toString(),
+                              item['descricao'].toString(),
+                              item['caminho'].toString(),
+                              item['link_video'].toString(),
+                              item['link'].toString(),
+                              widget.is_user
+                            )
+                          )
+                        ),
+                    child: Image.network(
+                      item['caminho'],
+                      height: 150,
+                    ),
+                  )
+                ],
+              ));
         },
       ),
       bottomNavigationBar: BottomAppBar(

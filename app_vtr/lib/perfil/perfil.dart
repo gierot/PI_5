@@ -5,6 +5,7 @@ import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:app_vtr/contact/contact.dart';
 import 'package:app_vtr/login.dart';
+import 'package:app_vtr/home/home.dart';
 
 DataUser user_vtr = DataUser();
 Settings settings = Settings();
@@ -89,7 +90,7 @@ class Perfil_user extends State<MyPerfil> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                            builder: (context) => const Contact())),
+                            builder: (context) => const Home(1))),
                     child: const Text(
                       'Meus produtos',
                       style: TextStyle(color: Colors.white),
