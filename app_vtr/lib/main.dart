@@ -33,7 +33,7 @@ void main() async {
   );
 
   final fcmToken = await FirebaseMessaging.instance.getToken();
-  print('TOKEN:  $fcmToken');
+
   await const FlutterSecureStorage().write(key: 'token_notificacao', value: fcmToken);
 
   1 < 3 ? runApp(const Login()) : runApp(const About());

@@ -61,12 +61,11 @@ class Settings {
     };
 
     http.Response response = await http.post(
-        Uri.parse(url + '/notificacao/cadastro-token'),
+        Uri.parse('$url/notificacao/cadastro-token'),
         headers: headers,
         body: jsonEncode(data)
     );
 
-    print(response.statusCode);
     if (response.statusCode == 200) {
       return true;
     }
