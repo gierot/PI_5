@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/data_user.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 DataUser user_vtr = DataUser();
 
@@ -25,6 +26,14 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
+      var token = await user_vtr.getToken('token_notificacao');
+
+      if(token != null) {
+        await registerTokenNotificacao(token, user['token']);
+      }
+      else {
+        await getTokenNotificacao(user['token']);
+      }
       user_vtr.setToken(user['token'], user['nome'], user['id'].toString(),
           user['telefone'], user['email']);
       return true;
@@ -38,6 +47,46 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> registerTokenNotificacao(String notificationToken, String authorizationToken) async {
+
+    Map<String, String> data = {'token': notificationToken};
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $authorizationToken'
+    };
+
+    http.Response response = await http.post(
+        Uri.parse('$url/notificacao/cadastro-token'),
+        headers: headers,
+        body: jsonEncode(data)
+    );
+
+    if (response.statusCode == 200) {
+      return true;
+    }
+    return false;
+  }
+
+  Future<bool> getTokenNotificacao(String authorizationToken) async {
+
+    headers = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $authorizationToken'
+    };
+
+    http.Response response = await http.get(
+        Uri.parse(url + '/notificacao/regastar-token'),
+        headers: headers
+    );
+
+    if (response.statusCode == 200) {
+      var responseDecode = await jsonDecode(response.body);
+      await const FlutterSecureStorage().write(key: 'token_notificacao', value: responseDecode['data']['token']);
       return true;
     }
     return false;
@@ -96,5 +145,18 @@ class Settings {
       var retorno = await jsonDecode(response.body);
       return retorno['data'];
     }
+  }
+
+  registerNotificacao(Map<String, String> data) async{
+    http.Response response = await http.post(
+        Uri.parse(url + '/notificacao/cadastro-token'),
+        headers: headers, body: jsonEncode(data)
+    );
+
+    if (response.statusCode == 200) {
+      var user = jsonDecode(response.body);
+      return true;
+    }
+    return false;
   }
 }

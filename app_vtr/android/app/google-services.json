@@ -1,0 +1,30 @@
+{
+  "project_info": {
+    "project_number": "150640323935",
+    "firebase_url": "https://vtr-notificacoes-default-rtdb.firebaseio.com",
+    "project_id": "vtr-notificacoes",
+    "storage_bucket": "vtr-notificacoes.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:150640323935:android:6eb82d7fc36fcd496d5aea",
+        "android_client_info": {
+          "package_name": "com.example.app_vtr"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB0aeXTeBl2pcX7vJjouVfKqC6_B-GGulM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

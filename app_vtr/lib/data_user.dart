@@ -24,5 +24,6 @@ class DataUser {
     storage.delete(key: 'id');
     storage.delete(key: 'telefone');
     storage.delete(key: 'email');
+    storage.delete(key: 'token_notificacao');
   }
 }
