@@ -46,7 +46,7 @@ class Perfil_user extends State<MyPerfil> {
   @override
   void initState() {
     super.initState();
-    loadingValuesUser();
+    //loadingValuesUser();
   }
 
   @override

@@ -1,7 +1,6 @@
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class DataUser {
-  String token_user = '';
   final storage = const FlutterSecureStorage();
 
   setToken(String token, String name, String id, String telefone,

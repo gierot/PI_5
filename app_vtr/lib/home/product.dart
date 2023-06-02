@@ -45,8 +45,11 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPage extends State<ProductPage> {
+
+  TextEditingController email_user = TextEditingController();
   var manual = '';
   var garantia;
+
   void _launchURL() async {
     var url = widget.redirect_product;
     if (await canLaunch(url)) {
@@ -129,27 +132,72 @@ class _ProductPage extends State<ProductPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                onPressed: _launchURL,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => const Color(0xFF31B425)),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 25))),
-                child: const Text('Comprar no site',
-                    style: TextStyle(color: Colors.white)),
-              ),
-              if (widget.is_user == 1)
+              if (widget.is_user == 0)
                 ElevatedButton(
-                  child: const Text('garantia',
-                      style: TextStyle(color: Colors.white)),
+                  onPressed: _launchURL,
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => const Color(0xFF31B425)),
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 25))),
+                  child: const Text('Comprar no site',
+                      style: TextStyle(color: Colors.white)),
+                ),
+              if (widget.is_user == 1)
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => const Color(0xFF31B425)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 25))),
+                  child: const Text('Tranferir',
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.max,
+                            children: [
+                              Container(
+                                padding: const EdgeInsets.symmetric(horizontal: 20),
+                                margin: const EdgeInsets.symmetric(vertical: 20),
+                                child: TextFormField(
+                                  controller: email_user,
+                                  style: const TextStyle(color: Colors.black),
+                                  decoration: InputDecoration(
+                                    isDense: true,
+                                    border: OutlineInputBorder(
+                                      borderSide: const BorderSide(color: Colors.white),
+                                      borderRadius: BorderRadius.circular(10),
+                                    ),
+                                    labelText: 'Email',
+                                    labelStyle: const TextStyle(
+                                      fontSize: 12.0,
+                                      color: Colors.white, // define a cor do rótulo
+                                    ),
+                                  ),
+                                ),
+                              )
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => const Color(0xFF31B425)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 25))),
+                  child: const Text('garantia',
+                      style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,

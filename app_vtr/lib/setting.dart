@@ -25,8 +25,8 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-      user_vtr.setToken(user['token'], user['nome'], user['id'].toString(),
-          user['telefone'], user['email']);
+      user_vtr.setToken(user['token'], user['nome'].toString(),
+        user['id'].toString(), user['telefone'], user['email'].toString());
       return true;
     }
     return false;
