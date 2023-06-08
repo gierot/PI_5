@@ -25,8 +25,8 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-      user_vtr.setToken(user['token'], user['nome'].toString(),
-        user['id'].toString(), user['telefone'], user['email'].toString());
+      user_vtr.setToken(user['token'].toString(), user['nome'].toString(),
+          user['id'].toString(), user['telefone'], user['email'].toString());
       return true;
     }
     return false;
@@ -96,5 +96,22 @@ class Settings {
       var retorno = await jsonDecode(response.body);
       return retorno['data'];
     }
+  }
+
+  sendProduct(Map<String, String> destiny) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(Uri.parse(url + '/transferencia'),
+        headers: header, body: jsonEncode(destiny));
+        
+    var body = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && body['data'] != null) {
+      return true;
+    }
+    return false;
   }
 }
