@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:app_vtr/forum/openForum.dart';
 
 Settings settings = Settings();
 
@@ -24,32 +25,45 @@ class ForumPage extends StatefulWidget {
 }
 
 class _ForumPage extends State<ForumPage> {
-  final List<String> nomes = ['João', 'Maria', 'Pedro', 'Gustavo'];
+  List<dynamic> forums = [];
+
+  void getForums() async {
+    List<dynamic> values = await settings.getForums();
+    setState(() {
+      forums = values;
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    getForums();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: settings.getColor('background'),
       appBar: Top(),
-      body: SingleChildScrollView(
-        child: Center(
-          child: Column(children: 
-            nomes.map((nome) {
-              return Container(
-                margin: const EdgeInsets.symmetric(horizontal:40, vertical: 10),
-                padding: const EdgeInsets.symmetric(vertical:25, horizontal:40),
-                decoration: const BoxDecoration(color: Colors.white),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Image.asset('imagens/09.png', height: 50,),
-                    Text(nome, style: const TextStyle(color: Colors.black),)
-                  ]
-                ),
-              );
-            }).toList()
-          ),
-        ),
+      body: ListView.builder(
+        itemCount: forums.length,
+        itemBuilder: (context, index) {
+          dynamic item = forums[index];
+          return Container(
+              margin: const EdgeInsets.symmetric(vertical: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  GestureDetector(
+                    onTap: () => Navigator.push(
+                        context, MaterialPageRoute(builder: (context) => OpenForum(item['id'], item['titulo'].toString(), item['descricao'].toString()))
+                    ),
+                    child: Text(item['titulo'].toString(),
+                      style: const TextStyle(color: Colors.white)),
+                  )
+                ],
+              ));
+        },
       ),
       bottomNavigationBar: BottomAppBar(
           color: settings.getColor('background'),

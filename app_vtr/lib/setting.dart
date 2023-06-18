@@ -106,12 +106,46 @@ class Settings {
     };
     http.Response response = await http.post(Uri.parse(url + '/transferencia'),
         headers: header, body: jsonEncode(destiny));
-        
+
     var body = jsonDecode(response.body);
 
     if (response.statusCode == 200 && body['data'] != null) {
       return true;
     }
     return false;
+  }
+
+  getForums() async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/forums');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(rota, headers: header);
+    var json = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return json['data'];
+    }
+
+    return null;
+  }
+
+  getComents(int id) async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/forums/$id');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(rota, headers: header);
+    var json = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return json['data'];
+    }
+
+    return null;
   }
 }
