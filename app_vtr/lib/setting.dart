@@ -148,4 +148,50 @@ class Settings {
 
     return null;
   }
+
+  sendForum(Map<String, String> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(Uri.parse(url + '/forums/'),
+        headers: header, body: jsonEncode(data));
+
+    var json = jsonDecode(response.body);
+
+    return (json['error'] == null && response.statusCode == 200);
+  }
+
+  sendComent(Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(
+      Uri.parse(url + '/forums/comentarios/'),
+      headers: header,
+      body: jsonEncode(data)
+    );
+
+    var json = jsonDecode(response.body);
+
+    print(json['error']);
+
+    return (json['error'] == null && response.statusCode == 200);
+  }
+
+  likeComent(data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(
+      Uri.parse(url + '/forums/comentarios/like'),
+      headers: header,
+      body: jsonEncode(data)
+    );
+  }
 }
