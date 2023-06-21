@@ -170,10 +170,9 @@ class Settings {
       'Authorization': 'Bearer $token'
     };
     http.Response response = await http.post(
-      Uri.parse(url + '/forums/comentarios/'),
-      headers: header,
-      body: jsonEncode(data)
-    );
+        Uri.parse(url + '/forums/comentarios/'),
+        headers: header,
+        body: jsonEncode(data));
 
     var json = jsonDecode(response.body);
 
@@ -189,9 +188,8 @@ class Settings {
       'Authorization': 'Bearer $token'
     };
     http.Response response = await http.post(
-      Uri.parse(url + '/forums/comentarios/like'),
-      headers: header,
-      body: jsonEncode(data)
-    );
+        Uri.parse(url + '/forums/comentarios/like'),
+        headers: header,
+        body: jsonEncode(data));
   }
 }

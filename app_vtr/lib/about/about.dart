@@ -74,7 +74,7 @@ class _AboutPage extends State<AboutPage> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               child: Text(
                 _fileContent,
-                style: const TextStyle(color: Colors.white, fontSize: 10),
+                style: const TextStyle(color: Colors.white, fontSize: 16),
               ),
             ),
             const YoutubePlayerScreen(
@@ -83,12 +83,11 @@ class _AboutPage extends State<AboutPage> {
               padding: const EdgeInsets.symmetric(horizontal: 10),
               margin: const EdgeInsets.symmetric(vertical: 10),
               child: Row(
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const Expanded(
                     child: Text(
                       'Em 2020, a VTR Effects entrou para o portfolio de projetos investidos pelo Polo Zaia. Assim se instalando dentro da Planer InovaCenter (Serra-ES), um hub de inovações criado pela faculdade UCL para ajudar no desenvolvimento de projetos inovadores e tecnologicos.',
-                      style: TextStyle(color: Colors.white, fontSize: 10),
+                      style: TextStyle(color: Colors.white, fontSize: 16),
                       softWrap: true,
                     ),
                   ),
@@ -111,7 +110,7 @@ class _AboutPage extends State<AboutPage> {
                   '“Superar as expectativas do mercado com nossos produtos, inspirando músicos onde quer que estejam.”',
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 10,
+                    fontSize: 16,
                   ),
                   textAlign: TextAlign.center,
                 ),

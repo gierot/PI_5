@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/register.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:app_vtr/data_user.dart';
 
+DataUser data = DataUser();
 Settings settings = Settings();
 
 class Login extends StatelessWidget {
@@ -33,6 +35,7 @@ class _LoginPage extends State<LoginPage> {
 
   void verifyAccount() async {
     Map<String, String> body = {'email': login.text, 'password': password.text};
+    await data.setUnityToken(password.text, 'password');
 
     var response = await settings.getAccountData(body);
     if (!response) {

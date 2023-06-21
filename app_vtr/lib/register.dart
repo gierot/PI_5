@@ -31,6 +31,10 @@ class _RegisterPage extends State<RegisterPage> {
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
 
+  void uploadImage(){
+    
+  }
+
   void registerUser() async {
     Map<String, String> body = {
       'email': email.text,
@@ -60,6 +64,22 @@ class _RegisterPage extends State<RegisterPage> {
           child: Column(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
+                ElevatedButton(
+                  onPressed: () => uploadImage(),
+                  style: ElevatedButton.styleFrom(
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(40.0),
+                    ),
+                    padding:
+                        const EdgeInsets.symmetric(vertical: 27, horizontal: 20),
+                    backgroundColor: Colors.white,
+                  ),
+                  child: const Icon(
+                    Icons.person_add,
+                    color: Colors.black,
+                    size: 36,
+                  ),
+                ),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
               child: TextFormField(

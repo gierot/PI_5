@@ -11,6 +11,10 @@ class DataUser {
     await storage.write(key: 'email', value: email);
   }
 
+  setUnityToken(value, token) async {
+    await storage.write(key: token, value: value);
+  }
+
   getToken(String user_key) async {
     var key = await storage.read(key: user_key);
     return key;
@@ -22,5 +26,6 @@ class DataUser {
     storage.delete(key: 'id');
     storage.delete(key: 'telefone');
     storage.delete(key: 'email');
+    storage.delete(key: 'password');
   }
 }
