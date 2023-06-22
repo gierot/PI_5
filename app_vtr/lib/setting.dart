@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 DataUser user_vtr = DataUser();
 
 class Settings {
-  String url = 'http://0.0.0.0:8000/api';
+  String url = 'http://18.228.214.223/api';
   Map<String, String> headers = {'Content-Type': 'application/json'};
 
   var all_colors = {
