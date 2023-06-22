@@ -41,17 +41,17 @@ class AboutPage extends StatefulWidget {
 class _AboutPage extends State<AboutPage> {
   String _fileContent = '';
 
-  @override
-  void initState() {
-    super.initState();
-    _loadFileContent();
-  }
-
-  Future<void> _loadFileContent() async {
+  _loadFileContent() async {
     String content = await textInFile();
     setState(() {
       _fileContent = content;
     });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    _loadFileContent();
   }
 
   @override
