@@ -3,12 +3,13 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 class DataUser {
   final storage = const FlutterSecureStorage();
 
-  setToken(token, name, id, telefone, email) async {
+  setToken(token, name, id, telefone, email, cpf) async {
     await storage.write(key: 'token', value: token);
     await storage.write(key: 'name', value: name);
     await storage.write(key: 'id', value: id);
     await storage.write(key: 'telefone', value: telefone);
     await storage.write(key: 'email', value: email);
+    await storage.write(key: 'cpf', value: cpf);
   }
 
   setUnityToken(value, token) async {

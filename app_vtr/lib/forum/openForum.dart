@@ -128,7 +128,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                                     ),
                                     labelText: 'Comentario',
                                     labelStyle: const TextStyle(
-                                      fontSize: 12.0,
+                                      fontSize: 16.0,
                                       color: Colors.black,
                                     ),
                                   ),
@@ -175,7 +175,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                           Text(
                             item['comentario'].toString(),
                             style:
-                                const TextStyle(color: Colors.white, fontSize: 18),
+                                const TextStyle(color: Colors.white, fontSize: 16),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -245,7 +245,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                                                             'Comentario',
                                                         labelStyle:
                                                             const TextStyle(
-                                                          fontSize: 12.0,
+                                                          fontSize: 16.0,
                                                           color:
                                                               Colors.black,
                                                         ),
@@ -358,7 +358,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                                                                 'Comentario',
                                                             labelStyle:
                                                                 const TextStyle(
-                                                              fontSize: 12.0,
+                                                              fontSize: 16.0,
                                                               color:
                                                                   Colors.black,
                                                             ),

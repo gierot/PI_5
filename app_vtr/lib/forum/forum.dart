@@ -98,7 +98,7 @@ class _ForumPage extends State<ForumPage> {
                                 ),
                                 labelText: 'Titulo',
                                 labelStyle: const TextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 16.0,
                                   color: Colors.black,
                                 ),
                               ),
@@ -121,7 +121,7 @@ class _ForumPage extends State<ForumPage> {
                                 ),
                                 labelText: 'Questão',
                                 labelStyle: const TextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 16.0,
                                   color: Colors.black,
                                 ),
                               ),
@@ -144,7 +144,7 @@ class _ForumPage extends State<ForumPage> {
                                 ),
                                 labelText: 'Conteudo',
                                 labelStyle: const TextStyle(
-                                  fontSize: 12.0,
+                                  fontSize: 16.0,
                                   color: Colors.black,
                                 ),
                               ),

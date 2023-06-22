@@ -4,6 +4,7 @@ import 'package:app_vtr/top.dart';
 import 'package:app_vtr/register.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:app_vtr/data_user.dart';
+import 'package:app_vtr/message.dart';
 
 DataUser data = DataUser();
 Settings settings = Settings();
@@ -39,21 +40,9 @@ class _LoginPage extends State<LoginPage> {
 
     var response = await settings.getAccountData(body);
     if (!response) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(
-          behavior: SnackBarBehavior.floating,
-          backgroundColor: Colors.red,
-          content: Container(
-            padding: const EdgeInsets.symmetric(horizontal: 0),
-            width: 300, // Define um tamanho fixo para o SnackBar
-            child: const Text(
-              'Login/Senha incorretos.\nPor favor, tente novamente.',
-              textAlign: TextAlign.center,
-              style: TextStyle(color: Colors.white, fontSize: 16),
-            ),
-          ),
-        ),
-      );
+      MessageSnackBar(
+        'Login/Senha incorretos.\nPor favor, tente novamente.', 1
+      ).show(context);
       return;
     }
     Navigator.push(

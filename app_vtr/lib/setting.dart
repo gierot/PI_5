@@ -6,7 +6,7 @@ import 'dart:convert';
 DataUser user_vtr = DataUser();
 
 class Settings {
-  String url = 'http://0.0.0.0:8000/api';
+  String url = 'http://18.228.214.223/api';
   Map<String, String> headers = {'Content-Type': 'application/json'};
 
   var all_colors = {
@@ -23,10 +23,17 @@ class Settings {
     http.Response response = await http.post(Uri.parse(url + '/login'),
         headers: headers, body: jsonEncode(data));
 
+    print(response.statusCode);
+
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-      user_vtr.setToken(user['token'].toString(), user['nome'].toString(),
-          user['id'].toString(), user['telefone'], user['email'].toString());
+      user_vtr.setToken(
+          user['token'].toString(),
+          user['nome'].toString(),
+          user['id'].toString(),
+          user['telefone'],
+          user['email'].toString(),
+          user['cpfcnpj'].toString());
       return true;
     }
     return false;

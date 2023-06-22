@@ -5,6 +5,7 @@ import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app_vtr/data_user.dart';
+import 'package:app_vtr/message.dart';
 
 DataUser data = DataUser();
 Settings settings = Settings();
@@ -39,6 +40,7 @@ class _EditPerfilPage extends State<EditPerfilPage> {
   TextEditingController number = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController cpf = TextEditingController();
   String base64Image = '';
 
   uploadImage() async {
@@ -54,16 +56,26 @@ class _EditPerfilPage extends State<EditPerfilPage> {
   }
 
   void defaultValues() async {
+    var id_cpf = await data.getToken('cpf');
     var pass = await data.getToken('password');
     setState(() {
       name.text = widget.name;
       number.text = widget.number;
       email.text = widget.email;
       password.text = pass;
+      cpf.text = id_cpf;
     });
   }
 
-  void savePerfil() {}
+  void savePerfil() {
+    if (name.text.isEmpty ||
+        number.text.isEmpty ||
+        email.text.isEmpty ||
+        password.text.isEmpty ||
+        cpf.text.isEmpty) {
+      MessageSnackBar('Um dos campos não foi definido!', 1).show(context);
+    }
+  }
 
   void initState() {
     super.initState();
@@ -174,6 +186,31 @@ class _EditPerfilPage extends State<EditPerfilPage> {
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: "email",
+                    labelStyle: const TextStyle(color: Colors.white),
+                    fillColor: Colors.white,
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Colors.white,
+                        width: 2.0,
+                      ),
+                    ),
+                  )),
+            ),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+              child: TextFormField(
+                  controller: cpf,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "CPF | CNPJ",
                     labelStyle: const TextStyle(color: Colors.white),
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
