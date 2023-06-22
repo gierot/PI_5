@@ -95,13 +95,13 @@ class Perfil_user extends State<MyPerfil> {
                     MaterialPageRoute(builder: (context) => const Home(1))),
                 style: ButtonStyle(
                   padding: const MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 30, horizontal: 35)),
+                      EdgeInsets.symmetric(vertical: 25, horizontal: 35)),
                   backgroundColor:
                       MaterialStatePropertyAll(settings.getColor('green_btn')),
                 ),
                 child: const Text(
                   'Meus produtos',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
               ElevatedButton(
@@ -111,29 +111,31 @@ class Perfil_user extends State<MyPerfil> {
                         builder: (context) => EditPerfil(name, number, email))),
                 style: ButtonStyle(
                   padding: const MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 30, horizontal: 40)),
+                      EdgeInsets.symmetric(vertical: 25, horizontal: 40)),
                   backgroundColor:
                       MaterialStatePropertyAll(settings.getColor('green_btn')),
                 ),
                 child: const Text(
                   'Editar perfil',
-                  style: TextStyle(color: Colors.white),
+                  style: TextStyle(color: Colors.white, fontSize: 16),
                 ),
               ),
             ],
           ),
-          Container(
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10), color: Colors.red),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTap: () => logout(),
-                child: const Text(
-                  'Sair',
-                  style: TextStyle(color: Colors.white),
-                ),
-              )),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => logout(),
+            style: const ButtonStyle(
+              padding:  MaterialStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 25, horizontal: 60)),
+              backgroundColor:
+                  MaterialStatePropertyAll(Colors.red),
+            ),
+            child: const Text(
+              'Sair',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
         ],
       )),
       bottomNavigationBar: BottomAppBar(

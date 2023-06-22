@@ -77,77 +77,94 @@ class _LoginPage extends State<LoginPage> {
                 style: TextStyle(color: Colors.white),
               ),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: TextFormField(
-                controller: login,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: border_color),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  labelText: 'Email',
-                  labelStyle: const TextStyle(
-                    fontSize: 12.0,
-                    color: Colors.white, // define a cor do rótulo
-                  ),
-                ),
-              ),
+                  controller: login,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "email",
+                    labelStyle: const TextStyle(color: Colors.white),
+                    fillColor: const Color(0xFFbdb133),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFbdb133),
+                        width: 2.0,
+                      ),
+                    ),
+                  )),
             ),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+            Container(
+              padding: const EdgeInsets.symmetric(vertical: 10),
+              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: TextFormField(
-                controller: password,
-                obscureText: true,
-                style: const TextStyle(color: Colors.white),
-                decoration: InputDecoration(
-                  border: OutlineInputBorder(
-                    borderSide: BorderSide(color: border_color),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  labelText: 'Senha',
-                  labelStyle: const TextStyle(
-                    fontSize: 12.0,
-                    color: Colors.white, // define a cor do rótulo
-                  ),
-                ),
-              ),
+                  controller: password,
+                  obscureText: true,
+                  style: const TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: "Senha",
+                    labelStyle: const TextStyle(color: Colors.white),
+                    fillColor: const Color(0xFFbdb133),
+                    focusedBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Colors.blue,
+                      ),
+                    ),
+                    enabledBorder: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(10.0),
+                      borderSide: const BorderSide(
+                        color: Color(0xFFbdb133),
+                        width: 2.0,
+                      ),
+                    ),
+                  )),
             ),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              GestureDetector(
-                onTap: () => verifyAccount(),
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 50, vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFFbdb133),
+              ElevatedButton(
+                onPressed: () => verifyAccount(),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 50)),
+                  backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
+                    ),
                   ),
-                  child: const Text(
-                    'Entrar',
-                    style: TextStyle(color: Colors.white),
-                  ),
+                ),
+                child: const Text(
+                  'Entrar',
+                  style: TextStyle(color: Colors.white),
                 ),
               ),
-              GestureDetector(
-                onTap: () => Navigator.push(context,
+              const SizedBox(width: 20,),
+              ElevatedButton(
+                onPressed: () => Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const Register())),
-                child: Container(
-                  margin: const EdgeInsets.all(10),
-                  padding:
-                      const EdgeInsets.symmetric(horizontal: 40, vertical: 8),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: const Color(0xFF3BCF3E),
-                  ),
-                  child: const Text(
-                    'Registrar',
-                    style: TextStyle(color: Colors.white),
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
+                  backgroundColor: MaterialStateProperty.all(settings.getColor('green_btn')),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
+                    ),
                   ),
                 ),
-              )
+                child: const Text(
+                  'Registrar',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
             ]),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
@@ -175,47 +192,55 @@ class _LoginPage extends State<LoginPage> {
                 ],
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+            ElevatedButton(
+              onPressed: () => '',
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    'imagens/google.png',
-                    height: 20,
-                    width: 20,
-                  ),
-                  const Text('Login com Google', style: TextStyle(fontSize: 14))
-                ],
+              child: SizedBox(
+                height: 20,
+                width: 250, 
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'imagens/google.png',
+                      height: 20,
+                      width: 20,
+                    ),
+                    const SizedBox(width: 20),
+                    const Text(
+                      'Login com Google',
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    ),
+                  ],
+                ),
               ),
             ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 5, horizontal: 30),
-              padding: const EdgeInsets.symmetric(horizontal: 6, vertical: 5),
-              decoration: BoxDecoration(
-                border: Border.all(color: Colors.black),
-                borderRadius: BorderRadius.circular(10),
-                color: Colors.white,
+            const SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () => '',
+              style: ButtonStyle(
+                backgroundColor: MaterialStateProperty.all(Colors.white),
               ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  Image.asset(
-                    'imagens/outlook.png',
-                    height: 20,
-                    width: 20,
-                  ),
-                  const Text(
-                    'Login com Outlook',
-                    style: TextStyle(fontSize: 14),
-                  )
-                ],
+              child: SizedBox(
+                height: 20,
+                width: 250, 
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Image.asset(
+                      'imagens/outlook.png',
+                      height: 20,
+                      width: 20,
+                    ),
+                    const SizedBox(width: 20),
+                    const Text(
+                      'Login com Outlook',
+                      style: TextStyle(fontSize: 16, color: Colors.black),
+                    )
+                  ],
+                ),
               ),
             ),
           ],
