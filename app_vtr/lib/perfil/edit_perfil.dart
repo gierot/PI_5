@@ -6,6 +6,7 @@ import 'package:app_vtr/setting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app_vtr/data_user.dart';
 import 'package:app_vtr/message.dart';
+import 'dart:async';
 
 DataUser data = DataUser();
 Settings settings = Settings();
@@ -67,13 +68,29 @@ class _EditPerfilPage extends State<EditPerfilPage> {
     });
   }
 
-  void savePerfil() {
+  void savePerfil() async {
     if (name.text.isEmpty ||
         number.text.isEmpty ||
         email.text.isEmpty ||
         password.text.isEmpty ||
         cpf.text.isEmpty) {
       MessageSnackBar('Um dos campos não foi definido!', 1).show(context);
+      return;
+    }
+
+    Map<String, dynamic> data = {
+      'nome': name.text,
+      'email': email.text,
+      'cpfcnpj': cpf.text,
+      'telefone': number.text
+    };
+
+    var response = settings.updatePerfil(data);
+    
+    if(response == true){
+      Timer(const Duration(seconds: 5), () {
+        MessageSnackBar('Perfil atualizado com sucesso!', 2).show(context);
+      });
     }
   }
 

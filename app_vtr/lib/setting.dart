@@ -199,4 +199,16 @@ class Settings {
         headers: header,
         body: jsonEncode(data));
   }
+
+  updatePerfil(Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.put(
+        Uri.parse(url + '/perfis'),
+        headers: header,
+        body: jsonEncode(data));
+  }
 }
