@@ -4,6 +4,7 @@ import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/render_video.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:app_vtr/home/home.dart';
 
 Settings settings = Settings();
 
@@ -45,14 +46,52 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPage extends State<ProductPage> {
+  TextEditingController email_user = TextEditingController();
   var manual = '';
   var garantia;
+  var error = false;
+
   void _launchURL() async {
     var url = widget.redirect_product;
     if (await canLaunch(url)) {
       await launch(url);
     } else {
       throw 'Não foi possível abrir o link $url';
+    }
+  }
+
+  sendProduct() async {
+    Map<String, String> body = {
+      'new_user_email': email_user.text,
+      'usuario_produto_id': widget.id.toString()
+    };
+
+    var response = await settings.sendProduct(body);
+
+    if (response == true) {
+      setState(() { error = false; });
+      Navigator.push(
+          context, MaterialPageRoute(builder: (context) => const Home(1)));
+    } else {
+      setState(() {
+        error = true;
+      });
+      // ScaffoldMessenger.of(context).showSnackBar(
+      //   SnackBar(
+      //     behavior: SnackBarBehavior.floating,
+      //     backgroundColor: Colors.red,
+      //     elevation: 10000,
+      //     content: Container(
+      //       padding: const EdgeInsets.symmetric(horizontal: 0),
+      //       width: 600, // Define um tamanho fixo para o SnackBar
+      //       child: const Text(
+      //         'Não foi possivel enviar o produto! Por favor verifique o email do destinatario.',
+      //         textAlign: TextAlign.center,
+      //         style: TextStyle(color: Colors.white, fontSize: 16),
+      //       ),
+      //     ),
+      //   ),
+      // );
     }
   }
 
@@ -67,6 +106,7 @@ class _ProductPage extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
+    setState(() { error = false; });
     getManual();
     getGarantias();
   }
@@ -129,67 +169,148 @@ class _ProductPage extends State<ProductPage> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
-              ElevatedButton(
-                onPressed: _launchURL,
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => const Color(0xFF31B425)),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 25))),
-                child: const Text('Comprar no site',
-                    style: TextStyle(color: Colors.white)),
-              ),
-              if (widget.is_user == 1)
+              if (widget.is_user == 0)
                 ElevatedButton(
-                  child: const Text('garantia',
-                      style: TextStyle(color: Colors.white)),
+                  onPressed: _launchURL,
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
                           (states) => const Color(0xFF31B425)),
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 25))),
+                  child: const Text('Comprar no site',
+                      style: TextStyle(color: Colors.white)),
+                ),
+              if (widget.is_user == 1)
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => const Color(0xFF31B425)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 25))),
+                  child: const Text('Tranferir',
+                      style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
                       builder: (BuildContext context) {
-                        return Container(
-                          child: Column(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              const SizedBox(height: 16.0),
-                              Text(
-                                garantia[widget.id - 1]['nome'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
+                        return Stack(
+                          children: [
+                            Container(
+                              // Conteúdo do ModalBottomSheet
+                              child: Column(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: const Text(
+                                        'Digite o email do destinatário do produto!'),
+                                  ),
+                                  Container(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 20),
+                                    margin: const EdgeInsets.symmetric(
+                                        vertical: 20),
+                                    child: TextFormField(
+                                      controller: email_user,
+                                      style:
+                                          const TextStyle(color: Colors.black),
+                                      decoration: InputDecoration(
+                                        isDense: true,
+                                        border: OutlineInputBorder(
+                                          borderSide: const BorderSide(
+                                              color: Colors.white),
+                                          borderRadius:
+                                              BorderRadius.circular(10),
+                                        ),
+                                        labelText: 'Email',
+                                        labelStyle: const TextStyle(
+                                          fontSize: 12.0,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  ElevatedButton(
+                                    onPressed: sendProduct,
+                                    child: const Text('Transferir'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            if (error == true)
+                              Positioned(
+                                top: 0,
+                                left: 0,
+                                right: 0,
+                                child: Container(
+                                  // Seu componente de mensagem de alerta
+                                  color: Colors.red,
+                                  padding: const EdgeInsets.all(16),
+                                  child: const Text(
+                                    'Por favor verifique o email do destinatario.',
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                                 ),
-                                textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 16.0),
-                              Text(
-                                garantia[widget.id - 1]['hash'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 14,
-                                ),
-                                textAlign: TextAlign.center,
-                              ),
-                              const SizedBox(height: 16.0),
-                              ElevatedButton(
-                                child: const Text('Fechar'),
-                                onPressed: () {
-                                  Navigator.of(context).pop();
-                                },
-                              ),
-                            ],
-                          ),
+                          ],
                         );
                       },
                     );
                   },
                 ),
+              ElevatedButton(
+                style: ButtonStyle(
+                    backgroundColor: MaterialStateColor.resolveWith(
+                        (states) => const Color(0xFF31B425)),
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(
+                            vertical: 20, horizontal: 25))),
+                child: const Text('garantia',
+                    style: TextStyle(color: Colors.white)),
+                onPressed: () {
+                  showModalBottomSheet(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return Container(
+                        child: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            const SizedBox(height: 16.0),
+                            Text(
+                              garantia[widget.id - 1]['nome'].toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16.0),
+                            Text(
+                              garantia[widget.id - 1]['hash'].toString(),
+                              style: const TextStyle(
+                                color: Colors.black,
+                                fontSize: 14,
+                              ),
+                              textAlign: TextAlign.center,
+                            ),
+                            const SizedBox(height: 16.0),
+                            ElevatedButton(
+                              child: const Text('Fechar'),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
+                            ),
+                          ],
+                        ),
+                      );
+                    },
+                  );
+                },
+              ),
             ],
           )
         ]),

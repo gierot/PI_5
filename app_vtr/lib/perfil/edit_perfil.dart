@@ -1,74 +1,114 @@
-import 'package:app_vtr/login.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
+import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:app_vtr/data_user.dart';
 import 'package:app_vtr/message.dart';
+import 'dart:async';
 
+DataUser data = DataUser();
 Settings settings = Settings();
 
-class Register extends StatelessWidget {
-  const Register({super.key});
+class EditPerfil extends StatelessWidget {
+  final String name;
+  final String number;
+  final dynamic email;
+  EditPerfil(this.name, this.number, this.email);
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      home: RegisterPage(),
+    return MaterialApp(
+      home: EditPerfilPage(name, number, email),
     );
   }
 }
 
-class RegisterPage extends StatefulWidget {
-  const RegisterPage({super.key});
+class EditPerfilPage extends StatefulWidget {
+  final String name;
+  final String number;
+  final dynamic email;
+  EditPerfilPage(this.name, this.number, this.email);
 
   @override
-  State<RegisterPage> createState() => _RegisterPage();
+  State<EditPerfilPage> createState() => _EditPerfilPage();
 }
 
-class _RegisterPage extends State<RegisterPage> {
-  Color border_color = Colors.white;
+class _EditPerfilPage extends State<EditPerfilPage> {
+  final picker = ImagePicker();
   TextEditingController name = TextEditingController();
-  TextEditingController email = TextEditingController();
-  TextEditingController id_people = TextEditingController();
   TextEditingController number = TextEditingController();
+  TextEditingController email = TextEditingController();
   TextEditingController password = TextEditingController();
+  TextEditingController cpf = TextEditingController();
+  String base64Image = '';
 
-  void uploadImage() {}
+  uploadImage() async {
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-  void registerUser() async {
-    if (email.text.isEmpty ||
-        name.text.isEmpty ||
-        password.text.isEmpty ||
+    if (image != null) {
+      final imageBytes = await image.readAsBytes();
+      setState(() {
+        base64Image = base64Encode(imageBytes);
+      });
+      print(base64Image);
+    }
+  }
+
+  void defaultValues() async {
+    var id_cpf = await data.getToken('cpf');
+    var pass = await data.getToken('password');
+    setState(() {
+      name.text = widget.name;
+      number.text = widget.number;
+      email.text = widget.email;
+      password.text = pass;
+      cpf.text = id_cpf;
+    });
+  }
+
+  void savePerfil() async {
+    if (name.text.isEmpty ||
         number.text.isEmpty ||
-        id_people.text.isEmpty) {
+        email.text.isEmpty ||
+        password.text.isEmpty ||
+        cpf.text.isEmpty) {
       MessageSnackBar('Um dos campos não foi definido!', 1).show(context);
       return;
     }
-    Map<String, String> body = {
+
+    Map<String, dynamic> data = {
+      'nome': name.text,
       'email': email.text,
-      'name': name.text,
-      'password': password.text,
-      'telefone': number.text,
-      'cpfcnpj': id_people.text,
+      'cpfcnpj': cpf.text,
+      'telefone': number.text
     };
 
-    var response = await settings.registerUser(body);
-    if (!response) {
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Login()));
+    var response = settings.updatePerfil(data);
+    
+    if(response == true){
+      Timer(const Duration(seconds: 5), () {
+        MessageSnackBar('Perfil atualizado com sucesso!', 2).show(context);
+      });
     }
-    MessageSnackBar('Ocorreu um erro. Por favor, tente novamente.', 1)
-        .show(context);
+  }
+
+  void initState() {
+    super.initState();
+    defaultValues();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: Top(),
-      backgroundColor: const Color(0xFF04121F),
-      body: Center(
-          child: Column(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
+      backgroundColor: settings.getColor('background'),
+      body: SingleChildScrollView(
+        child: Center(
+            child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -89,7 +129,7 @@ class _RegisterPage extends State<RegisterPage> {
                   ),
                 ),
                 ElevatedButton(
-                  onPressed: () => registerUser(),
+                  onPressed: () => savePerfil(),
                   style: ElevatedButton.styleFrom(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(10),
@@ -134,11 +174,10 @@ class _RegisterPage extends State<RegisterPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: TextFormField(
-                  controller: password,
-                  obscureText: true,
+                  controller: number,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: "Senha",
+                    labelText: "Numero",
                     labelStyle: const TextStyle(color: Colors.white),
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
@@ -185,7 +224,7 @@ class _RegisterPage extends State<RegisterPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: TextFormField(
-                  controller: id_people,
+                  controller: cpf,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
                     labelText: "CPF | CNPJ",
@@ -210,10 +249,11 @@ class _RegisterPage extends State<RegisterPage> {
               padding: const EdgeInsets.symmetric(vertical: 10),
               margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
               child: TextFormField(
-                  controller: number,
+                  controller: password,
+                  obscureText: true,
                   style: const TextStyle(color: Colors.white),
                   decoration: InputDecoration(
-                    labelText: 'Numero | Telefone',
+                    labelText: "Senha",
                     labelStyle: const TextStyle(color: Colors.white),
                     fillColor: Colors.white,
                     focusedBorder: OutlineInputBorder(
@@ -231,7 +271,20 @@ class _RegisterPage extends State<RegisterPage> {
                     ),
                   )),
             ),
-          ])),
+          ],
+        )),
+      ),
+      bottomNavigationBar: BottomAppBar(
+          color: settings.getColor('background'),
+          height: 40,
+          child: Center(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 15.0,
+              children: <Widget>[All_buttons()],
+            ),
+          )),
+      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
 }

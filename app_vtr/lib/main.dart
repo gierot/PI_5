@@ -16,6 +16,8 @@ Future<void> _firebaseMessagingBackgroundHandler (RemoteMessage message) async {
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  var token_is_defined = await data.getToken('token');
+
   await Firebase.initializeApp(
       options: DefaultFirebaseOptions.currentPlatform
   );
@@ -36,5 +38,9 @@ void main() async {
 
   await const FlutterSecureStorage().write(key: 'token_notificacao', value: fcmToken);
 
-  1 < 3 ? runApp(const Login()) : runApp(const About());
+  if (token_is_defined != null && token_is_defined.isNotEmpty) {
+    runApp(const About());
+  } else {
+    runApp(const Login());
+  }
 }

@@ -24,8 +24,11 @@ class Settings {
     http.Response response = await http.post(Uri.parse(url + '/login'),
         headers: headers, body: jsonEncode(data));
 
+    print(response.statusCode);
+
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
+<<<<<<< HEAD
       var token = await user_vtr.getToken('token_notificacao');
 
       if(token != null) {
@@ -36,6 +39,15 @@ class Settings {
       }
       user_vtr.setToken(user['token'], user['nome'], user['id'].toString(),
           user['telefone'], user['email']);
+=======
+      user_vtr.setToken(
+          user['token'].toString(),
+          user['nome'].toString(),
+          user['id'].toString(),
+          user['telefone'],
+          user['email'].toString(),
+          user['cpfcnpj'].toString());
+>>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
       return true;
     }
     return false;
@@ -147,6 +159,7 @@ class Settings {
     }
   }
 
+<<<<<<< HEAD
   registerNotificacao(Map<String, String> data) async{
     http.Response response = await http.post(
         Uri.parse(url + '/notificacao/cadastro-token'),
@@ -155,8 +168,115 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
+=======
+  sendProduct(Map<String, String> destiny) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(Uri.parse(url + '/transferencia'),
+        headers: header, body: jsonEncode(destiny));
+
+    var body = jsonDecode(response.body);
+
+    if (response.statusCode == 200 && body['data'] != null) {
+>>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
       return true;
     }
     return false;
   }
+<<<<<<< HEAD
+=======
+
+  getForums() async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/forums');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(rota, headers: header);
+    var json = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return json['data'];
+    }
+
+    return null;
+  }
+
+  getComents(int id) async {
+    String token = await user_vtr.getToken('token');
+    Uri rota = Uri.parse(url + '/forums/$id');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.get(rota, headers: header);
+    var json = jsonDecode(response.body);
+
+    if (response.statusCode == 200) {
+      return json['data'];
+    }
+
+    return null;
+  }
+
+  sendForum(Map<String, String> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(Uri.parse(url + '/forums/'),
+        headers: header, body: jsonEncode(data));
+
+    var json = jsonDecode(response.body);
+
+    return (json['error'] == null && response.statusCode == 200);
+  }
+
+  sendComent(Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(
+        Uri.parse(url + '/forums/comentarios/'),
+        headers: header,
+        body: jsonEncode(data));
+
+    var json = jsonDecode(response.body);
+
+    print(json['error']);
+
+    return (json['error'] == null && response.statusCode == 200);
+  }
+
+  likeComent(data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.post(
+        Uri.parse(url + '/forums/comentarios/like'),
+        headers: header,
+        body: jsonEncode(data));
+  }
+
+  updatePerfil(Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.put(
+        Uri.parse(url + '/perfis'),
+        headers: header,
+        body: jsonEncode(data));
+  }
+>>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
 }

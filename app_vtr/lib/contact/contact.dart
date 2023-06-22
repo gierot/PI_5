@@ -45,6 +45,7 @@ class _ContactPage extends State<ContactPage> {
       backgroundColor: settings.getColor('background'),
       body: Center(
           child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
         children: [
           Image.asset(
             'imagens/21.png',
@@ -57,42 +58,23 @@ class _ContactPage extends State<ContactPage> {
               style: TextStyle(color: Colors.white),
             ),
           ),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
-            margin: const EdgeInsets.symmetric(vertical: 40),
-            child: TextFormField(
-              controller: TextEditingController(),
-              scrollPadding: const EdgeInsets.symmetric(vertical: 30),
-              style: const TextStyle(color: Colors.white),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderSide: const BorderSide(color: Colors.white),
-                  borderRadius: BorderRadius.circular(10),
-                ),
-                labelText: 'Mensagem',
-                labelStyle: const TextStyle(
-                  fontSize: 12.0,
-                  color: Colors.white, // define a cor do rótulo
-                ),
-              ),
-              textInputAction: TextInputAction
-                  .newline, // Permite a quebra de linha ao pressionar Enter
-              keyboardType: TextInputType.multiline,
+          ElevatedButton(
+            style: ButtonStyle(
+              backgroundColor: MaterialStatePropertyAll(settings.getColor('green_btn')),
+              padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(vertical:20, horizontal: 40))
             ),
+              onPressed: () => redirectUser(),
+              child: const Text('Enviar', style: TextStyle(color: Colors.white))
           ),
-          GestureDetector(
-              onTap: () => redirectUser(),
-              child: Container(
-                padding:
-                    const EdgeInsets.symmetric(vertical: 15, horizontal: 50),
-                decoration: BoxDecoration(
-                  border: Border.all(color: Colors.black),
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.green,
-                ),
-                child:
-                    const Text('Enviar', style: TextStyle(color: Colors.white)),
-              ))
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 50),
+            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+            child: const Text(
+              'Envie uma mensagem para nós sobre, feedbacks, queixas, duvidas...',
+              style: TextStyle(color: Colors.white)
+            )
+          )
+          
         ],
       )),
       bottomNavigationBar: BottomAppBar(

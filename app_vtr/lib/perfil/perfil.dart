@@ -3,9 +3,9 @@ import 'package:app_vtr/data_user.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
-import 'package:app_vtr/contact/contact.dart';
 import 'package:app_vtr/login.dart';
 import 'package:app_vtr/home/home.dart';
+import 'package:app_vtr/perfil/edit_perfil.dart';
 
 DataUser user_vtr = DataUser();
 Settings settings = Settings();
@@ -37,10 +37,15 @@ class Perfil_user extends State<MyPerfil> {
         context, MaterialPageRoute(builder: (context) => const Login()));
   }
 
-  Future<void> loadingValuesUser() async {
-    name = await user_vtr.getToken('name');
-    email = await user_vtr.getToken('email');
-    number = await user_vtr.getToken('telefone');
+  loadingValuesUser() async {
+    var getname = await user_vtr.getToken('name');
+    var getemail = await user_vtr.getToken('email');
+    var getnumber = await user_vtr.getToken('telefone');
+    setState(() {
+      name = getname;
+      email = getemail;
+      number = getnumber;
+    });
   }
 
   @override
@@ -55,90 +60,94 @@ class Perfil_user extends State<MyPerfil> {
       appBar: Top(),
       backgroundColor: settings.getColor('background'),
       body: Center(
-        child: Column(
-          children: [
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: Image.asset('imagens/kailane.png', height: 60),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 20),
-              child: Column(
-                children: [
-                  Image.asset('imagens/25.png',height: 30),
-                  Text(name, style: const TextStyle(color: Colors.white, fontSize: 18)),
-                  const SizedBox(height: 15),
-                  Text(email, style: const TextStyle(color: Colors.white, fontSize: 18)),
-                  const SizedBox(height: 15),
-                  Text(number, style: const TextStyle(color: Colors.white, fontSize: 18)),
-                  Image.asset('imagens/25.png',height: 30,)
-                ],
-              ),
-            ),
-            const SizedBox(height: 50),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          child: Column(
+        children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10),
+            child: Image.asset('imagens/kailane.png', height: 60),
+          ),
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 20),
+            child: Column(
               children: [
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: settings.getColor('green_btn')
-                  ),
-                  padding:const EdgeInsets.symmetric(vertical: 20, horizontal: 40),
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const Home(1))),
-                    child: const Text(
-                      'Meus produtos',
-                      style: TextStyle(color: Colors.white),
-                    ),
-                  )
-                ),
-                Container(
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: settings.getColor('green_btn')
-                  ),
-                  padding:const EdgeInsets.symmetric(vertical: 20, horizontal: 50),
-                  margin: const EdgeInsets.symmetric(vertical: 10),
-                  child: GestureDetector(
-                    onTap: () => Navigator.push(context,
-                      MaterialPageRoute(
-                        builder: (context) => const Contact())
-                    ),
-                    child: const Text('Editar perfil', style: TextStyle(color: Colors.white)),
-                  )
-                ),
+                Image.asset('imagens/25.png', height: 30),
+                Text(name,
+                    style: const TextStyle(color: Colors.white, fontSize: 18)),
+                const SizedBox(height: 15),
+                Text(email,
+                    style: const TextStyle(color: Colors.white, fontSize: 18)),
+                const SizedBox(height: 15),
+                Text(number,
+                    style: const TextStyle(color: Colors.white, fontSize: 18)),
+                Image.asset(
+                  'imagens/25.png',
+                  height: 30,
+                )
               ],
             ),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10), 
-                color: Colors.red
-              ),
-              padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 75),
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              child: GestureDetector(
-                onTap: () => logout(),
-                child: const Text('Sair', style: TextStyle(color: Colors.white),),
-              )
-            ),
-          ],
-        )
-      ),
-      bottomNavigationBar: BottomAppBar(
-        color: settings.getColor('background'),
-        height: 40,
-        child: Center(
-          child: Wrap(
-            alignment: WrapAlignment.center,
-            spacing: 15.0,
-            children: <Widget>[All_buttons()],
           ),
-        )),
+          const SizedBox(height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              ElevatedButton(
+                onPressed: () => Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => const Home(1))),
+                style: ButtonStyle(
+                  padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 25, horizontal: 35)),
+                  backgroundColor:
+                      MaterialStatePropertyAll(settings.getColor('green_btn')),
+                ),
+                child: const Text(
+                  'Meus produtos',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+              ElevatedButton(
+                onPressed: () => Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => EditPerfil(name, number, email))),
+                style: ButtonStyle(
+                  padding: const MaterialStatePropertyAll(
+                      EdgeInsets.symmetric(vertical: 25, horizontal: 40)),
+                  backgroundColor:
+                      MaterialStatePropertyAll(settings.getColor('green_btn')),
+                ),
+                child: const Text(
+                  'Editar perfil',
+                  style: TextStyle(color: Colors.white, fontSize: 16),
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => logout(),
+            style: const ButtonStyle(
+              padding:  MaterialStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 25, horizontal: 60)),
+              backgroundColor:
+                  MaterialStatePropertyAll(Colors.red),
+            ),
+            child: const Text(
+              'Sair',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+        ],
+      )),
+      bottomNavigationBar: BottomAppBar(
+          color: settings.getColor('background'),
+          height: 40,
+          child: Center(
+            child: Wrap(
+              alignment: WrapAlignment.center,
+              spacing: 15.0,
+              children: <Widget>[All_buttons()],
+            ),
+          )),
       floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
     );
   }
