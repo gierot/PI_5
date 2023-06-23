@@ -25,6 +25,7 @@ class ContactPage extends StatefulWidget {
 }
 
 class _ContactPage extends State<ContactPage> {
+  final GlobalKey<NavigatorState> navigatorKey = GlobalKey<NavigatorState>();
   int contador = 0;
 
   void redirectToEmail(String email) async {
@@ -44,58 +45,68 @@ class _ContactPage extends State<ContactPage> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: Top(),
-      backgroundColor: settings.getColor('background'),
-      body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Image.asset(
-            'imagens/21.png',
-            height: 100,
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 40),
-            child: const Text(
-              'Envie uma mensagem para nós',
-              style: TextStyle(color: Colors.white),
-            ),
-          ),
-          ElevatedButton(
-            style: ButtonStyle(
-              backgroundColor: MaterialStatePropertyAll(settings.getColor('green_btn')),
-              padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(vertical:20, horizontal: 40))
-            ),
-              onPressed: () => redirectToEmail('contato@vtreffects.com'),
-              child: const Text('Enviar', style: TextStyle(color: Colors.white))
-          ),
-          Container(
-            margin: const EdgeInsets.symmetric(vertical: 50),
-            padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-            child: const Text(
-              'Envie uma mensagem para nós sobre, feedbacks, queixas, duvidas...',
-              style: TextStyle(color: Colors.white)
-            )
-          )
-          
-        ],
-      )),
-      bottomNavigationBar: BottomAppBar(
-          color: settings.getColor('background'),
-          height: 40,
-          child: Center(
-            child: Wrap(
-              alignment: WrapAlignment.center,
-              spacing: 15.0,
-              children: <Widget>[All_buttons()],
-            ),
+    return WillPopScope(
+      onWillPop: () async {
+        if (navigatorKey.currentState?.canPop() ?? false) {
+          navigatorKey.currentState?.pop();
+          return false; 
+        }
+        return true;
+      },
+      child:MaterialApp(
+        navigatorKey: navigatorKey,
+        home: Scaffold(
+          appBar: Top(),
+          backgroundColor: settings.getColor('background'),
+          body: Center(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Image.asset(
+                'imagens/21.png',
+                height: 100,
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 40),
+                child: const Text(
+                  'Envie uma mensagem para nós',
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+              ElevatedButton(
+                style: ButtonStyle(
+                  backgroundColor: MaterialStatePropertyAll(settings.getColor('green_btn')),
+                  padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(vertical:20, horizontal: 40))
+                ),
+                  onPressed: () => redirectToEmail('contato@vtreffects.com'),
+                  child: const Text('Enviar', style: TextStyle(color: Colors.white))
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 50),
+                padding: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: const Text(
+                  'Envie uma mensagem para nós sobre, feedbacks, queixas, duvidas...',
+                  style: TextStyle(color: Colors.white)
+                )
+              )
+              
+            ],
           )),
-      floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+          bottomNavigationBar: BottomAppBar(
+              color: settings.getColor('background'),
+              height: 40,
+              child: Center(
+                child: Wrap(
+                  alignment: WrapAlignment.center,
+                  spacing: 15.0,
+                  children: <Widget>[All_buttons()],
+                ),
+              )),
+          floatingActionButtonLocation: FloatingActionButtonLocation.endDocked,
+        )
+      )
     );
   }
 }
