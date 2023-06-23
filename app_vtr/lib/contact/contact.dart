@@ -27,19 +27,23 @@ class ContactPage extends StatefulWidget {
 class _ContactPage extends State<ContactPage> {
   int contador = 0;
 
-
-  void redirectToEmailApp(String email) async {
+  void redirectToEmail(String email) async {
     final Uri emailLaunchUri = Uri(
       scheme: 'mailto',
       path: email,
     );
 
+    final String webUrl = 'https://mail.google.com/mail/?view=cm&fs=1&to=$email';
+
     if (await canLaunch(emailLaunchUri.toString())) {
       await launch(emailLaunchUri.toString());
+    } else if (await canLaunch(webUrl)) {
+      await launch(webUrl);
     } else {
-      throw 'Não foi possível abrir o aplicativo de e-mail.';
+      throw 'Não foi possível abrir o aplicativo de e-mail ou a página web do e-mail.';
     }
   }
+
 
 
   @override
@@ -67,7 +71,7 @@ class _ContactPage extends State<ContactPage> {
               backgroundColor: MaterialStatePropertyAll(settings.getColor('green_btn')),
               padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(vertical:20, horizontal: 40))
             ),
-              onPressed: () => redirectToEmailApp('contato@vtreffects.com'),
+              onPressed: () => redirectToEmail('contato@vtreffects.com'),
               child: const Text('Enviar', style: TextStyle(color: Colors.white))
           ),
           Container(
