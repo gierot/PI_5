@@ -141,7 +141,7 @@ class _ProductPage extends State<ProductPage> {
                                 manual,
                                 style: const TextStyle(
                                   color: Colors.black,
-                                  fontSize: 14,
+                                  fontSize: 16,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
@@ -174,7 +174,7 @@ class _ProductPage extends State<ProductPage> {
                   onPressed: _launchURL,
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
-                          (states) => const Color(0xFF31B425)),
+                          (states) => const Color(0xFF1E0B8E)),
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 25))),
@@ -185,7 +185,7 @@ class _ProductPage extends State<ProductPage> {
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(
-                          (states) => const Color(0xFF31B425)),
+                          (states) => settings.getColor('color_font')),
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 25))),
@@ -229,7 +229,7 @@ class _ProductPage extends State<ProductPage> {
                                         ),
                                         labelText: 'Email',
                                         labelStyle: const TextStyle(
-                                          fontSize: 12.0,
+                                          fontSize: 16.0,
                                         ),
                                       ),
                                     ),
@@ -262,55 +262,56 @@ class _ProductPage extends State<ProductPage> {
                     );
                   },
                 ),
-              ElevatedButton(
-                style: ButtonStyle(
-                    backgroundColor: MaterialStateColor.resolveWith(
-                        (states) => const Color(0xFF31B425)),
-                    padding: MaterialStateProperty.all(
-                        const EdgeInsets.symmetric(
-                            vertical: 20, horizontal: 25))),
-                child: const Text('garantia',
-                    style: TextStyle(color: Colors.white)),
-                onPressed: () {
-                  showModalBottomSheet(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return Container(
-                        child: Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            const SizedBox(height: 16.0),
-                            Text(
-                              garantia[widget.id - 1]['nome'].toString(),
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
+              if(widget.is_user == 1)
+                ElevatedButton(
+                  style: ButtonStyle(
+                      backgroundColor: MaterialStateColor.resolveWith(
+                          (states) => const Color(0xFF1E0B8E)),
+                      padding: MaterialStateProperty.all(
+                          const EdgeInsets.symmetric(
+                              vertical: 20, horizontal: 25))),
+                  child: const Text('garantia',
+                      style: TextStyle(color: Colors.white)),
+                  onPressed: () {
+                    showModalBottomSheet(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return Container(
+                          child: Column(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              const SizedBox(height: 16.0),
+                              Text(
+                                garantia[widget.id - 1]['nome'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16.0),
-                            Text(
-                              garantia[widget.id - 1]['hash'].toString(),
-                              style: const TextStyle(
-                                color: Colors.black,
-                                fontSize: 14,
+                              const SizedBox(height: 16.0),
+                              Text(
+                                garantia[widget.id - 1]['hash'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
                               ),
-                              textAlign: TextAlign.center,
-                            ),
-                            const SizedBox(height: 16.0),
-                            ElevatedButton(
-                              child: const Text('Fechar'),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ],
-                        ),
-                      );
-                    },
-                  );
-                },
-              ),
+                              const SizedBox(height: 16.0),
+                              ElevatedButton(
+                                child: const Text('Fechar'),
+                                onPressed: () {
+                                  Navigator.of(context).pop();
+                                },
+                              ),
+                            ],
+                          ),
+                        );
+                      },
+                    );
+                  },
+                ),
             ],
           )
         ]),

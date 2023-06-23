@@ -45,6 +45,8 @@ dependencies:
   firebase_core: ^2.13.0
   firebase_messaging: ^14.6.1
   image_picker: ^0.8.9
+  google_sign_in: ^6.1.4
+  googleapis: ^11.2.0
 
 dev_dependencies:
   flutter_test:

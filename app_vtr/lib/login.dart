@@ -54,106 +54,151 @@ class _LoginPage extends State<LoginPage> {
     return Scaffold(
       appBar: Top(),
       backgroundColor: const Color(0xFF04121F),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(50),
-                color: Colors.white,
-              ),
-              child: Image.asset(
-                'imagens/user.png',
-                height: 24,
-              ),
-            ),
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 8),
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
-              child: const Text(
-                'Acessar sua conta',
-                style: TextStyle(color: Colors.white),
-              ),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              child: TextFormField(
-                  controller: login,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: "email",
-                    labelStyle: const TextStyle(color: Colors.white),
-                    fillColor: const Color(0xFFbdb133),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFbdb133),
-                        width: 2.0,
-                      ),
-                    ),
-                  )),
-            ),
-            Container(
-              padding: const EdgeInsets.symmetric(vertical: 10),
-              margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
-              child: TextFormField(
-                  controller: password,
-                  obscureText: true,
-                  style: const TextStyle(color: Colors.white),
-                  decoration: InputDecoration(
-                    labelText: "Senha",
-                    labelStyle: const TextStyle(color: Colors.white),
-                    fillColor: const Color(0xFFbdb133),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Colors.blue,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(10.0),
-                      borderSide: const BorderSide(
-                        color: Color(0xFFbdb133),
-                        width: 2.0,
-                      ),
-                    ),
-                  )),
-            ),
-            Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-              ElevatedButton(
-                onPressed: () => verifyAccount(),
-                style: ButtonStyle(
-                  padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(vertical: 20, horizontal: 50)),
-                  backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
-                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
-                    RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
-                    ),
-                  ),
+      body:SingleChildScrollView(
+        child: Center(
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 10),
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(50),
+                  color: Colors.white,
                 ),
+                child: Image.asset(
+                  'imagens/user.png',
+                  height: 24,
+                ),
+              ),
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 8),
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 20),
                 child: const Text(
-                  'Entrar',
+                  'Acessar sua conta',
                   style: TextStyle(color: Colors.white),
                 ),
               ),
-              const SizedBox(width: 20,),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: TextFormField(
+                    controller: login,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: "email",
+                      labelStyle: const TextStyle(color: Colors.white),
+                      fillColor: const Color(0xFFbdb133),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFbdb133),
+                          width: 2.0,
+                        ),
+                      ),
+                    )),
+              ),
+              Container(
+                padding: const EdgeInsets.symmetric(vertical: 10),
+                margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 25),
+                child: TextFormField(
+                    controller: password,
+                    obscureText: true,
+                    style: const TextStyle(color: Colors.white),
+                    decoration: InputDecoration(
+                      labelText: "Senha",
+                      labelStyle: const TextStyle(color: Colors.white),
+                      fillColor: const Color(0xFFbdb133),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Colors.blue,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(10.0),
+                        borderSide: const BorderSide(
+                          color: Color(0xFFbdb133),
+                          width: 2.0,
+                        ),
+                      ),
+                    )),
+              ),
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                ElevatedButton(
+                  onPressed: () => verifyAccount(),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: 20, horizontal: 50)),
+                    backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Entrar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+                const SizedBox(width: 20,),
+                ElevatedButton(
+                  onPressed: () => Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => const Register())),
+                  style: ButtonStyle(
+                    padding: MaterialStateProperty.all(
+                        const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
+                    backgroundColor: MaterialStateProperty.all(settings.getColor('green_btn')),
+                    shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                      RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
+                      ),
+                    ),
+                  ),
+                  child: const Text(
+                    'Registrar',
+                    style: TextStyle(color: Colors.white),
+                  ),
+                ),
+              ]),
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Expanded(
+                      child: Divider(
+                        color: Colors.white,
+                        height: 10,
+                      ),
+                    ),
+                    Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 16),
+                        child: RichText(
+                          text: const TextSpan(
+                              text: 'OU', style: TextStyle(color: Colors.white)),
+                        )),
+                    const Expanded(
+                      child: Divider(
+                        color: Colors.white,
+                        height: 10,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
               ElevatedButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Register())),
+                onPressed: () => '',
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(
                       const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
-                  backgroundColor: MaterialStateProperty.all(settings.getColor('green_btn')),
+                  backgroundColor: MaterialStateProperty.all(const Color(0xFF1E0B8E)),
                   shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                     RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
@@ -161,91 +206,14 @@ class _LoginPage extends State<LoginPage> {
                   ),
                 ),
                 child: const Text(
-                  'Registrar',
-                  style: TextStyle(color: Colors.white),
+                  'Entrar como convidado',
+                  style: TextStyle(fontSize: 16, color: Colors.white),
                 ),
               ),
-            ]),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 20),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.white,
-                      height: 10,
-                    ),
-                  ),
-                  Padding(
-                      padding: const EdgeInsets.symmetric(horizontal: 16),
-                      child: RichText(
-                        text: const TextSpan(
-                            text: 'OU', style: TextStyle(color: Colors.white)),
-                      )),
-                  const Expanded(
-                    child: Divider(
-                      color: Colors.white,
-                      height: 10,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () => '',
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              child: SizedBox(
-                height: 20,
-                width: 250, 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'imagens/google.png',
-                      height: 20,
-                      width: 20,
-                    ),
-                    const SizedBox(width: 20),
-                    const Text(
-                      'Login com Google',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => '',
-              style: ButtonStyle(
-                backgroundColor: MaterialStateProperty.all(Colors.white),
-              ),
-              child: SizedBox(
-                height: 20,
-                width: 250, 
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Image.asset(
-                      'imagens/outlook.png',
-                      height: 20,
-                      width: 20,
-                    ),
-                    const SizedBox(width: 20),
-                    const Text(
-                      'Login com Outlook',
-                      style: TextStyle(fontSize: 16, color: Colors.black),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
+            ],
+          ),
         ),
-      ),
+      )
     );
   }
 }

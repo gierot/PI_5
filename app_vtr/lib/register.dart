@@ -124,7 +124,7 @@ class _RegisterPage extends State<RegisterPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(
-                        color: Colors.white,
+                        color: Color(0xFFbdb133),
                         width: 2.0,
                       ),
                     ),
@@ -150,7 +150,7 @@ class _RegisterPage extends State<RegisterPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(
-                        color: Colors.white,
+                        color: Color(0xFFbdb133),
                         width: 2.0,
                       ),
                     ),
@@ -175,7 +175,7 @@ class _RegisterPage extends State<RegisterPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(
-                        color: Colors.white,
+                        color: Color(0xFFbdb133),
                         width: 2.0,
                       ),
                     ),
@@ -200,7 +200,7 @@ class _RegisterPage extends State<RegisterPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(
-                        color: Colors.white,
+                        color: Color(0xFFbdb133),
                         width: 2.0,
                       ),
                     ),
@@ -225,7 +225,7 @@ class _RegisterPage extends State<RegisterPage> {
                     enabledBorder: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(10.0),
                       borderSide: const BorderSide(
-                        color: Colors.white,
+                        color: Color(0xFFbdb133),
                         width: 2.0,
                       ),
                     ),

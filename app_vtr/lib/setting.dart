@@ -268,9 +268,9 @@ class Settings {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    http.Response response = await http.put(
-        Uri.parse(url + '/perfis'),
-        headers: header,
-        body: jsonEncode(data));
+    http.Response response = await http.put(Uri.parse(url + '/perfis'),
+        headers: header, body: jsonEncode(data));
+
+    return response.statusCode == 200 ? true : false;
   }
 }
