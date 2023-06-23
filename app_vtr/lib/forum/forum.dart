@@ -70,6 +70,8 @@ class _ForumPage extends State<ForumPage> {
       appBar: Top(),
       body: Column(
         children: [
+          const Text('Forum', style: TextStyle(color: Colors.white, fontSize: 24)),
+          const SizedBox(height: 20),
           Container(
             margin: const EdgeInsets.symmetric(horizontal: 40),
             padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -164,6 +166,12 @@ class _ForumPage extends State<ForumPage> {
                   },
                 );
               },
+              style: ButtonStyle(
+                padding: MaterialStateProperty.all(
+                    const EdgeInsets.symmetric(horizontal: 10, vertical: 25)),
+                backgroundColor:
+                    MaterialStateProperty.all(settings.getColor('color_font')),
+              ),
               child: const Row(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [Text('Enviar uma pergunta'), Icon(Icons.send)]),

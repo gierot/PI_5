@@ -24,8 +24,6 @@ class Settings {
     http.Response response = await http.post(Uri.parse(url + '/login'),
         headers: headers, body: jsonEncode(data));
 
-    print(response.statusCode);
-
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
       var token = await user_vtr.getToken('token_notificacao');
@@ -244,8 +242,6 @@ class Settings {
         body: jsonEncode(data));
 
     var json = jsonDecode(response.body);
-
-    print(json['error']);
 
     return (json['error'] == null && response.statusCode == 200);
   }

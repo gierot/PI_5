@@ -135,7 +135,7 @@ class _LoginPage extends State<LoginPage> {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                         const EdgeInsets.symmetric(vertical: 20, horizontal: 50)),
-                    backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
+                    backgroundColor: MaterialStateProperty.all(settings.getColor('green_btn')),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
@@ -154,7 +154,7 @@ class _LoginPage extends State<LoginPage> {
                   style: ButtonStyle(
                     padding: MaterialStateProperty.all(
                         const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
-                    backgroundColor: MaterialStateProperty.all(settings.getColor('green_btn')),
+                    backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
                     shape: MaterialStateProperty.all<RoundedRectangleBorder>(
                       RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
