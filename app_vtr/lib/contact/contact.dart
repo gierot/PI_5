@@ -27,15 +27,19 @@ class ContactPage extends StatefulWidget {
 class _ContactPage extends State<ContactPage> {
   int contador = 0;
 
-  void redirectUser() async {
-    var url = 'gierot@ucl.br';
-    if (await canLaunch(url)) {
-      await launch(url);
+
+  void redirectToEmailApp(String email) async {
+    final Uri emailLaunchUri = Uri(
+      scheme: 'mailto',
+      path: email,
+    );
+
+    if (await canLaunch(emailLaunchUri.toString())) {
+      await launch(emailLaunchUri.toString());
     } else {
-      throw 'Não foi possível abrir o link $url';
+      throw 'Não foi possível abrir o aplicativo de e-mail.';
     }
   }
-
 
 
   @override
@@ -63,7 +67,7 @@ class _ContactPage extends State<ContactPage> {
               backgroundColor: MaterialStatePropertyAll(settings.getColor('green_btn')),
               padding: const MaterialStatePropertyAll( EdgeInsets.symmetric(vertical:20, horizontal: 40))
             ),
-              onPressed: () => redirectUser(),
+              onPressed: () => redirectToEmailApp('contato@vtreffects.com'),
               child: const Text('Enviar', style: TextStyle(color: Colors.white))
           ),
           Container(

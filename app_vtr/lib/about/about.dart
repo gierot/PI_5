@@ -8,7 +8,7 @@ import 'package:app_vtr/setting.dart';
 
 Settings settings = Settings();
 
-Future<String> textInFile() async {
+textInFile() async {
   String text = '';
   try {
     text = await File('assets/text.txt').readAsString();
@@ -22,7 +22,6 @@ Future<String> textInFile() async {
 class About extends StatelessWidget {
   const About({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
