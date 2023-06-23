@@ -28,7 +28,6 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-<<<<<<< HEAD
       var token = await user_vtr.getToken('token_notificacao');
 
       if(token != null) {
@@ -37,9 +36,6 @@ class Settings {
       else {
         await getTokenNotificacao(user['token']);
       }
-      user_vtr.setToken(user['token'], user['nome'], user['id'].toString(),
-          user['telefone'], user['email']);
-=======
       user_vtr.setToken(
           user['token'].toString(),
           user['nome'].toString(),
@@ -47,7 +43,6 @@ class Settings {
           user['telefone'],
           user['email'].toString(),
           user['cpfcnpj'].toString());
->>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
       return true;
     }
     return false;
@@ -159,7 +154,6 @@ class Settings {
     }
   }
 
-<<<<<<< HEAD
   registerNotificacao(Map<String, String> data) async{
     http.Response response = await http.post(
         Uri.parse(url + '/notificacao/cadastro-token'),
@@ -168,7 +162,11 @@ class Settings {
 
     if (response.statusCode == 200) {
       var user = jsonDecode(response.body);
-=======
+      return true;
+    }
+    return false;
+  }
+
   sendProduct(Map<String, String> destiny) async {
     String token = await user_vtr.getToken('token');
     Map<String, String> header = {
@@ -181,13 +179,10 @@ class Settings {
     var body = jsonDecode(response.body);
 
     if (response.statusCode == 200 && body['data'] != null) {
->>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
       return true;
     }
     return false;
   }
-<<<<<<< HEAD
-=======
 
   getForums() async {
     String token = await user_vtr.getToken('token');
@@ -278,5 +273,4 @@ class Settings {
         headers: header,
         body: jsonEncode(data));
   }
->>>>>>> 522d56eae6967153eed91a9d87b3c705d6783157
 }
