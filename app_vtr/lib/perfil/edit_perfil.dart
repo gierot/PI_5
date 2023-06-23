@@ -7,6 +7,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:app_vtr/data_user.dart';
 import 'package:app_vtr/message.dart';
 import 'dart:async';
+import 'dart:io';
 
 DataUser data = DataUser();
 Settings settings = Settings();
@@ -45,15 +46,18 @@ class _EditPerfilPage extends State<EditPerfilPage> {
   String base64Image = '';
 
   uploadImage() async {
-    // final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    // if (image != null) {
-    //   final imageBytes = await image.readAsBytes();
-    //   setState(() {
-    //     base64Image = base64Encode(imageBytes);
-    //   });
-    //   print(base64Image);
-    // }
+    if (image != null) {
+      File _img = File(image.path);
+      // print(Text(_img.path));
+      settings.postImage(_img.path);
+      // final imageBytes = await image.readAsBytes();
+      // setState(() {
+      //   base64Image = base64Encode(imageBytes);
+      // });
+      // print(base64Image);
+    }
   }
 
   void defaultValues() async {

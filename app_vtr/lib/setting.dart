@@ -273,4 +273,19 @@ class Settings {
 
     return response.statusCode == 200 ? true : false;
   }
+
+  postImage(String imagepath) async{
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'multipart/form-data',
+      'Authorization': 'Bearer $token'
+    };
+    
+    var request = http.MultipartRequest('POST', Uri.parse(url + '/perfis/image'))
+                   ..headers.addAll(header)
+                   ..files.add(await http.MultipartFile.fromPath('image', imagepath));
+    var response = await request.send();
+    print(response.statusCode);
+
+  }
 }

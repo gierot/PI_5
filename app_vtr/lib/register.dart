@@ -5,6 +5,8 @@ import 'package:app_vtr/setting.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:app_vtr/message.dart';
 import 'dart:convert';
+import 'dart:io';
+
 
 Settings settings = Settings();
 
@@ -37,15 +39,18 @@ class _RegisterPage extends State<RegisterPage> {
   String base64Image = '';
 
   uploadImage() async {
-    // final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    // if (image != null) {
-    //   final imageBytes = await image.readAsBytes();
-    //   setState(() {
-    //     base64Image = base64Encode(imageBytes);
-    //   });
-    //   print(base64Image);
-    // }
+    if (image != null) {
+      File _img = File(image.path);
+      // print(Text(_img.path));
+      settings.postImage(_img.path);
+      // final imageBytes = await image.readAsBytes();
+      // setState(() {
+      //   base64Image = base64Encode(imageBytes);
+      // });
+      // print(base64Image);
+    }
   }
 
   void registerUser() async {
