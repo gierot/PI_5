@@ -2,7 +2,9 @@ import 'package:app_vtr/login.dart';
 import 'package:flutter/material.dart';
 import 'package:app_vtr/top.dart';
 import 'package:app_vtr/setting.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:app_vtr/message.dart';
+import 'dart:convert';
 
 Settings settings = Settings();
 
@@ -25,14 +27,26 @@ class RegisterPage extends StatefulWidget {
 }
 
 class _RegisterPage extends State<RegisterPage> {
+  final picker = ImagePicker();
   Color border_color = Colors.white;
   TextEditingController name = TextEditingController();
   TextEditingController email = TextEditingController();
   TextEditingController id_people = TextEditingController();
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
+  String base64Image = '';
 
-  void uploadImage() {}
+  uploadImage() async {
+    // final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+
+    // if (image != null) {
+    //   final imageBytes = await image.readAsBytes();
+    //   setState(() {
+    //     base64Image = base64Encode(imageBytes);
+    //   });
+    //   print(base64Image);
+    // }
+  }
 
   void registerUser() async {
     if (email.text.isEmpty ||

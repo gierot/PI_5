@@ -45,15 +45,15 @@ class _EditPerfilPage extends State<EditPerfilPage> {
   String base64Image = '';
 
   uploadImage() async {
-    final XFile? image = await picker.pickImage(source: ImageSource.gallery);
+    // final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-    if (image != null) {
-      final imageBytes = await image.readAsBytes();
-      setState(() {
-        base64Image = base64Encode(imageBytes);
-      });
-      print(base64Image);
-    }
+    // if (image != null) {
+    //   final imageBytes = await image.readAsBytes();
+    //   setState(() {
+    //     base64Image = base64Encode(imageBytes);
+    //   });
+    //   print(base64Image);
+    // }
   }
 
   void defaultValues() async {
