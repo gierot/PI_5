@@ -144,6 +144,7 @@ class _ForumPage extends State<ForumPage> {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     builder: (BuildContext context) {
                       return Container(
                         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -306,6 +307,7 @@ class _ForumPage extends State<ForumPage> {
                                 IconButton(
                                   onPressed: () => showModalBottomSheet(
                                     context: context,
+                                    isScrollControlled: true,
                                     builder: (BuildContext context) {
                                       return Container(
                                         padding: const EdgeInsets.symmetric(

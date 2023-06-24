@@ -282,7 +282,7 @@ class Settings {
     http.Response response = await http
         .delete(Uri.parse(url + '/forums/comentarios/$id'), headers: header);
     var json = jsonDecode(response.body);
-    return (response.statusCode == 200 && json['error'] != null);
+    return (response.statusCode == 200 && json['error'] == null);
   }
 
   updateComent(int id, Map<String, dynamic> data) async {
@@ -296,8 +296,8 @@ class Settings {
         headers: header,
         body: jsonEncode(data));
 
-    var json = jsonDecode(response.body);
-    return (response.statusCode == 200 && json['error'] != null);
+    var json = await jsonDecode(response.body);
+    return (response.statusCode == 200 && json['error'] == null);
   }
 
   likeComent(data) async {
@@ -316,7 +316,7 @@ class Settings {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    await http.delete(Uri.parse(url + '/forums/comentarios/like'),
+    await http.delete(Uri.parse(url + '/forums/comentarios/unlike'),
         headers: header, body: jsonEncode(data));
   }
 

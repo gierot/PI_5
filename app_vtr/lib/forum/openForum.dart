@@ -39,7 +39,6 @@ class OpenForumPage extends StatefulWidget {
 
 class _OpenForumPage extends State<OpenForumPage> {
   TextEditingController coment = TextEditingController();
-  TextEditingController edit = TextEditingController();
   bool is_like = false;
   List<int> list_index = [];
 
@@ -144,7 +143,7 @@ class _OpenForumPage extends State<OpenForumPage> {
 
   void editComent(int id) async {
     Navigator.pop(context);
-    if (edit.text.isEmpty) {
+    if (coment.text.isEmpty) {
       MessageSnackBar(
               'Não foi possivel atualizar o comentario, pois, não há conteudo!',
               1)
@@ -152,7 +151,7 @@ class _OpenForumPage extends State<OpenForumPage> {
       return;
     }
 
-    Map<String, dynamic> data = {'comentario': edit.text};
+    Map<String, dynamic> data = {'comentario': coment.text};
 
     var edit_coment = await settings.updateComent(id, data);
 
@@ -213,6 +212,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                 onPressed: () {
                   showModalBottomSheet(
                     context: context,
+                    isScrollControlled: true,
                     builder: (BuildContext context) {
                       return Container(
                         padding: const EdgeInsets.symmetric(vertical: 5),
@@ -353,6 +353,7 @@ class _OpenForumPage extends State<OpenForumPage> {
                                   IconButton(
                                     onPressed: () => showModalBottomSheet(
                                       context: context,
+                                      isScrollControlled: true,
                                       builder: (BuildContext context) {
                                         return Container(
                                           padding: const EdgeInsets.symmetric(
