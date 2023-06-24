@@ -141,6 +141,7 @@ class _ProductPage extends State<ProductPage> {
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (BuildContext context) {
                         return Container(
                           child: Column(
@@ -203,6 +204,7 @@ class _ProductPage extends State<ProductPage> {
                   onPressed: () {
                     showModalBottomSheet(
                       context: context,
+                      isScrollControlled: true,
                       builder: (BuildContext context) {
                         return Stack(
                           children: [
@@ -294,6 +296,7 @@ class _ProductPage extends State<ProductPage> {
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     showModalBottomSheet(
+                      isScrollControlled: true,
                       context: context,
                       builder: (BuildContext context) {
                         return Container(

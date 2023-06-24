@@ -249,7 +249,7 @@ class Settings {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    await http.delete(Uri.parse(url + '/forums/comentarios/like'),
+    await http.delete(Uri.parse(url + '/forums/comentarios/unlike'),
         headers: header, body: jsonEncode(data));
   }
 
