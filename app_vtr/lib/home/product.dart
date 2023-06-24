@@ -381,7 +381,7 @@ class _ProductPage extends State<ProductPage> {
                               ),
                               const SizedBox(height: 16.0),
                               Text(
-                                garantia[widget.id - 1]['validade'].toString(),
+                                garantia['validade'].toString(),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
