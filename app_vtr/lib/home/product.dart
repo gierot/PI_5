@@ -276,37 +276,77 @@ class _ProductPage extends State<ProductPage> {
                             mainAxisSize: MainAxisSize.max,
                             children: [
                               const SizedBox(height: 16.0),
-                              Text(
-                                garantia['nome'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  garantia['nome'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              Text(
-                                garantia['hash'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  garantia['hash'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              Text(
-                                'validade até : ' + garantia['validade'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Validade até: ' + garantia['validade'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              Text(
-                                'Data de compra: ' + garantia['data_compra'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Data de compra: ' + garantia['data_compra'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                               const SizedBox(height: 16.0),
                               ElevatedButton(
