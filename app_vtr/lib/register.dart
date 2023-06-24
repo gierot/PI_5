@@ -109,6 +109,11 @@ class _RegisterPage extends State<RegisterPage> {
                     color: Colors.black,
                     size: 36,
                   ),
+                  // child: Icon(
+                  //   Icons.person_add,
+                  //   color: Colors.black,
+                  //   size: 36,
+                  // ),
                 ),
                 ElevatedButton(
                   onPressed: () => registerUser(),
