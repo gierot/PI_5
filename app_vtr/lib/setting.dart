@@ -143,8 +143,9 @@ class Settings {
     };
     http.Response response =
         await http.delete(Uri.parse(url + '/forums/$id'), headers: header);
-    var json = jsonDecode(response.body);
-    return (response.statusCode == 200 && json['error'] != null);
+
+    print(response.statusCode);
+    return (response.statusCode == 200);
   }
 
   updateForum(int id, Map<String, dynamic> data) async {
@@ -171,7 +172,6 @@ class Settings {
     var json = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
-      print(jsonEncode(json['data']));
       return json['data'];
     }
 
