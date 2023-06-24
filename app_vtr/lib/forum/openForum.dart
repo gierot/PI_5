@@ -4,6 +4,8 @@ import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:app_vtr/forum/openForum.dart';
 import 'package:app_vtr/data_user.dart';
+import 'package:app_vtr/message.dart';
+import 'dart:async';
 
 DataUser data = DataUser();
 Settings settings = Settings();
@@ -35,6 +37,8 @@ class OpenForumPage extends StatefulWidget {
 
 class _OpenForumPage extends State<OpenForumPage> {
   TextEditingController coment = TextEditingController();
+  TextEditingController edit = TextEditingController();
+
   Map<String, dynamic> coments = {};
   var user_id;
 
@@ -46,6 +50,12 @@ class _OpenForumPage extends State<OpenForumPage> {
   }
 
   void sendComent() async {
+    Navigator.pop(context);
+    if(coment.text.isEmpty){
+      MessageSnackBar('Não foi possivel salvar o comentario, pois, não há conteudo!', 1)
+          .show(context);
+      return;
+    }
     Map<String, dynamic> data = {
       'forum_id': widget.id.toInt(),
       'comentario': coment.text,
@@ -54,7 +64,14 @@ class _OpenForumPage extends State<OpenForumPage> {
 
     var send_coment = await settings.sendComent(data);
 
-    if (send_coment) {
+    if (!send_coment) {
+      MessageSnackBar('Não foi possivel salvar o comentario!', 1)
+          .show(context);
+      return;
+    }
+    MessageSnackBar('Comentario salvo com sucesso!', 2)
+          .show(context);
+    Timer(const Duration(seconds: 3), () {
       Navigator.push(
         context,
         MaterialPageRoute(
@@ -62,12 +79,74 @@ class _OpenForumPage extends State<OpenForumPage> {
               OpenForum(widget.id, widget.titulo, widget.descricao),
         ),
       );
-    }
+    });
   }
 
-  void like() {}
+  void likeComent(int id) async {
+    Map<String, dynamic> data = {'comentario_id': id};
+    var is_liked = await settings.likeComent(data);
 
-  void editComent() async {}
+    if (is_liked) {}
+  }
+
+  void unlikeComent(int id) async {
+    Map<String, dynamic> data = {'comentario_id': id};
+
+    var is_unlike = await settings.unlikeComent(data);
+
+    if (is_unlike) {}
+  }
+
+  void deleteComent(int id) async {
+    var delete_coment = await settings.deleteComent(id);
+
+    if (!delete_coment) {
+      MessageSnackBar('Não foi possivel excluir o comentario.', 1)
+          .show(context);
+      return;
+    }
+    MessageSnackBar('Comentario excluido com sucesso!', 2).show(context);
+    Timer(const Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              OpenForum(widget.id, widget.titulo, widget.descricao),
+        ),
+      );
+    });
+  }
+
+  void editComent(int id) async {
+    Navigator.pop(context);
+    if (edit.text.isEmpty) {
+      MessageSnackBar(
+              'Não foi possivel atualizar o comentario, pois, não há conteudo!',
+              1)
+          .show(context);
+      return;
+    }
+
+    Map<String, dynamic> data = {'comentario': edit.text};
+
+    var edit_coment = await settings.updateComent(id, data);
+
+    if(!edit_coment){
+      MessageSnackBar('Não foi possivel editar o comentario.', 1)
+          .show(context);
+      return;
+    }
+    MessageSnackBar('Comentario editado com sucesso!', 2).show(context);
+    Timer(const Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) =>
+              OpenForum(widget.id, widget.titulo, widget.descricao),
+        ),
+      );
+    });
+  }
 
   void getIdUser() async {
     var id = await data.getToken('id');
@@ -75,13 +154,6 @@ class _OpenForumPage extends State<OpenForumPage> {
       user_id = id;
     });
   }
-
-  void likeComent(coment_id) async {
-    Map<String, dynamic> body = {'comentario_id': coment_id};
-    settings.likeComent(body);
-  }
-
-  void removeLike() {}
 
   @override
   void initState() {
@@ -96,7 +168,20 @@ class _OpenForumPage extends State<OpenForumPage> {
       backgroundColor: settings.getColor('background'),
       appBar: Top(),
       body: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Container(
+            margin: const EdgeInsets.symmetric(vertical: 10, horizontal: 30),
+            child:
+                Column(mainAxisAlignment: MainAxisAlignment.start, children: [
+              Text(coments['titulo'],
+                  style: const TextStyle(fontSize: 20, color: Colors.white)),
+              const SizedBox(height: 20),
+              Text(coments['descricao'],
+                  style: const TextStyle(fontSize: 14, color: Colors.white)),
+            ]),
+          ),
+          const SizedBox(height: 20),
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 40),
               padding: const EdgeInsets.symmetric(horizontal: 40),
@@ -140,6 +225,18 @@ class _OpenForumPage extends State<OpenForumPage> {
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [Text('Enviar'), Icon(Icons.send)]),
                               onPressed: () => sendComent(),
+                              style: ButtonStyle(
+                                padding: MaterialStateProperty.all(
+                                    const EdgeInsets.symmetric(vertical: 10, horizontal: 5)),
+                                backgroundColor:
+                                    MaterialStateProperty.all(settings.getColor('green_btn')),
+                                shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                                  RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(
+                                        20), // Defina o raio desejado aqui
+                                  ),
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -147,252 +244,158 @@ class _OpenForumPage extends State<OpenForumPage> {
                     },
                   );
                 },
+                style: ButtonStyle(
+                  padding: MaterialStateProperty.all(
+                      const EdgeInsets.symmetric(vertical: 20, horizontal: 40)),
+                  backgroundColor:
+                      MaterialStateProperty.all(settings.getColor('green_btn')),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(
+                          20), // Defina o raio desejado aqui
+                    ),
+                  ),
+                ),
                 child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [Text('Enviar um comentario'), Icon(Icons.send)]),
               )),
+          const SizedBox(height: 20),
           Expanded(
               child: ListView.builder(
             itemCount: coments['comentarios'] != null
                 ? coments['comentarios'].length
                 : 0,
             itemBuilder: (context, index) {
-              dynamic item = coments['comentarios'] != null
-                  ? coments['comentarios'][index]
-                  : null;
+              dynamic item = coments['comentarios'] != null ? coments['comentarios'][index] : null;
               if (item != null) {
                 return Column(
                   children: [
                     Container(
-                      decoration: BoxDecoration(
-                        color: const Color(0xff7c94b6),
-                        borderRadius: BorderRadius.circular(12),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
-                      margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                      child: Column(
-                        children: [
-                          Text(
-                            item['comentario'].toString(),
-                            style:
-                                const TextStyle(color: Colors.white, fontSize: 16),
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              ElevatedButton(
-                                style: ButtonStyle(
-                                  padding: MaterialStateProperty.all(
-                                      const EdgeInsets.symmetric(
-                                          horizontal: 4, vertical: 4)),
-                                ),
-                                child: const Icon(
-                                  Icons.favorite,
-                                  size: 20,
-                                ),
-                                onPressed: () =>
-                                    likeComent(item['comentario_id']),
-                              ),
-                              if (item['usuario_id'].toString() == user_id)
-                                ElevatedButton(
-                                    child: const Icon(Icons.edit),
-                                    onPressed: () {
-                                      showModalBottomSheet(
-                                        context: context,
-                                        builder: (BuildContext context) {
-                                          return Container(
-                                            padding:
-                                                const EdgeInsets.symmetric(
-                                                    vertical: 5),
-                                            child: Column(
-                                              mainAxisSize:
-                                                  MainAxisSize.min,
-                                              children: [
-                                                Container(
-                                                    margin: const EdgeInsets
-                                                            .symmetric(
-                                                        vertical: 10,
-                                                        horizontal: 40),
-                                                    padding:
-                                                        const EdgeInsets
-                                                                .symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 40),
-                                                    child: TextFormField(
-                                                      controller: coment,
-                                                      scrollPadding:
-                                                          const EdgeInsets
-                                                                  .symmetric(
-                                                              vertical: 30),
-                                                      style:
-                                                          const TextStyle(
-                                                              color: Colors
-                                                                  .black),
-                                                      decoration:
-                                                          InputDecoration(
-                                                        border:
-                                                            OutlineInputBorder(
-                                                          borderSide:
-                                                              const BorderSide(
-                                                                  color: Colors
-                                                                      .black),
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10),
-                                                        ),
-                                                        labelText:
-                                                            'Comentario',
-                                                        labelStyle:
-                                                            const TextStyle(
-                                                          fontSize: 16.0,
-                                                          color:
-                                                              Colors.black,
-                                                        ),
-                                                      ),
-                                                      textInputAction:
-                                                          TextInputAction
-                                                              .newline,
-                                                      keyboardType:
-                                                          TextInputType
-                                                              .multiline,
-                                                    )),
-                                                ElevatedButton(
-                                                  child:
-                                                      const Text('Salvar'),
-                                                  onPressed: () =>
-                                                      sendComent(),
-                                                ),
-                                              ],
-                                            ),
-                                          );
-                                        },
-                                      );
-                                    }),
-                              if (item['usuario_id'].toString() == user_id)
-                                ElevatedButton(
-                                  onPressed: () => removeLike(),
-                                  child: const Icon(Icons.delete),
-                                )
-                            ])
-                        ]
-                      )
-                    ),
-                    Column(
-                      children: item['respostas'].map<Widget>((coment) {
-                        return Container(
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
+                      child: Column(children: [
+                        Container(
                           decoration: BoxDecoration(
-                            color: const Color(0xff7c94b6),
+                            color: settings.getColor('color_font'),
                             borderRadius: BorderRadius.circular(12),
                           ),
                           padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 10),
                           margin: const EdgeInsets.symmetric(horizontal: 25, vertical: 10),
-                          child: Column(children: [
-                            Text(coment['comentario'].toString(),
-                                style: const TextStyle(color: Colors.white)),
-                            Row(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                      padding: MaterialStateProperty.all(
-                                          const EdgeInsets.symmetric(
-                                              horizontal: 4, vertical: 4)),
-                                    ),
-                                    child: const Icon(
-                                      Icons.favorite,
-                                      size: 20,
-                                    ),
-                                    onPressed: () =>
-                                        likeComent(coment['comentario_id']),
+                          child: Text(
+                            item['comentario'].toString(),
+                            style: const TextStyle(
+                                color: Colors.white, fontSize: 16),
+                          ),
+                        ),
+                        Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              IconButton(
+                                onPressed: () => likeComent(item['id'].toInt()),
+                                icon: const CircleAvatar(
+                                  backgroundColor: Colors.red,
+                                  radius: 16,
+                                  child: Icon(
+                                    Icons.favorite,
+                                    size: 16,
+                                    color: Colors.white,
                                   ),
-                                  if (coment['usuario_id'].toString() == user_id)
-                                    ElevatedButton(
-                                        child: const Icon(Icons.edit),
-                                        onPressed: () {
-                                          showModalBottomSheet(
-                                            context: context,
-                                            builder: (BuildContext context) {
-                                              return Container(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        vertical: 5),
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.min,
-                                                  children: [
-                                                    Container(
-                                                        margin: const EdgeInsets
-                                                                .symmetric(
-                                                            vertical: 10,
-                                                            horizontal: 40),
-                                                        padding:
-                                                            const EdgeInsets
-                                                                    .symmetric(
-                                                                vertical: 10,
-                                                                horizontal: 40),
-                                                        child: TextFormField(
-                                                          controller: coment,
-                                                          scrollPadding:
-                                                              const EdgeInsets
-                                                                      .symmetric(
-                                                                  vertical: 30),
-                                                          style:
-                                                              const TextStyle(
-                                                                  color: Colors
-                                                                      .black),
-                                                          decoration:
-                                                              InputDecoration(
-                                                            border:
-                                                                OutlineInputBorder(
-                                                              borderSide:
-                                                                  const BorderSide(
-                                                                      color: Colors
-                                                                          .black),
-                                                              borderRadius:
-                                                                  BorderRadius
-                                                                      .circular(
-                                                                          10),
-                                                            ),
-                                                            labelText:
-                                                                'Comentario',
-                                                            labelStyle:
-                                                                const TextStyle(
-                                                              fontSize: 16.0,
-                                                              color:
-                                                                  Colors.black,
-                                                            ),
-                                                          ),
-                                                          textInputAction:
-                                                              TextInputAction
-                                                                  .newline,
-                                                          keyboardType:
-                                                              TextInputType
-                                                                  .multiline,
-                                                        )),
-                                                    ElevatedButton(
-                                                      child:
-                                                          const Text('Salvar'),
-                                                      onPressed: () =>
-                                                          sendComent(),
+                                ),
+                              ),
+                              if (item['usuario_id'].toString() == user_id)
+                                IconButton(
+                                  onPressed: () => showModalBottomSheet(
+                                    context: context,
+                                    builder: (BuildContext context) {
+                                      return Container(
+                                        padding:
+                                            const EdgeInsets.symmetric(
+                                                vertical: 5),
+                                        child: Column(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Container(
+                                                margin: const EdgeInsets
+                                                        .symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 40),
+                                                padding: const EdgeInsets
+                                                        .symmetric(
+                                                    vertical: 10,
+                                                    horizontal: 40),
+                                                child: TextFormField(
+                                                  controller: coment,
+                                                  scrollPadding:
+                                                      const EdgeInsets
+                                                              .symmetric(
+                                                          vertical: 30),
+                                                  style: const TextStyle(
+                                                      color:
+                                                          Colors.black),
+                                                  decoration:
+                                                      InputDecoration(
+                                                    border:
+                                                        OutlineInputBorder(
+                                                      borderSide:
+                                                          const BorderSide(
+                                                              color: Colors
+                                                                  .black),
+                                                      borderRadius:
+                                                          BorderRadius
+                                                              .circular(
+                                                                  10),
                                                     ),
-                                                  ],
-                                                ),
-                                              );
-                                            },
-                                          );
-                                        }),
-                                  if (coment['usuario_id'].toString() == user_id)  
-                                    ElevatedButton(
-                                      onPressed: () => removeLike(),
-                                      child: const Icon(Icons.delete),
-                                    )
-                                  
-                                ])
-                          ]),
-                        );
-                      }).toList(),
-                    ),
+                                                    labelText:
+                                                        'Comentario',
+                                                    labelStyle:
+                                                        const TextStyle(
+                                                      fontSize: 16,
+                                                      color: Colors.black,
+                                                    ),
+                                                  ),
+                                                  textInputAction:
+                                                      TextInputAction
+                                                          .newline,
+                                                  keyboardType:
+                                                      TextInputType
+                                                          .multiline,
+                                                )),
+                                            ElevatedButton(
+                                              child: const Text('Salvar'),
+                                              onPressed: () =>
+                                                  editComent(item['id'].toInt()),
+                                            ),
+                                          ],
+                                        ),
+                                      );
+                                    },
+                                  ),
+                                  icon: const CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 16,
+                                    child: Icon(
+                                      Icons.edit,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                              if (item['usuario_id'].toString() == user_id)
+                                IconButton(
+                                  onPressed: () => deleteComent(item['id'].toInt()),
+                                  icon: const CircleAvatar(
+                                    backgroundColor: Colors.red,
+                                    radius: 16,
+                                    child: Icon(
+                                      Icons.delete,
+                                      size: 16,
+                                      color: Colors.white,
+                                    ),
+                                  ),
+                                ),
+                            ])
+                      ])),
                   ],
                 );
               } else {

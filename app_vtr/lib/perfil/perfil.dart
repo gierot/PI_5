@@ -87,47 +87,43 @@ class Perfil_user extends State<MyPerfil> {
             ),
           ),
           const SizedBox(height: 50),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () => Navigator.push(context,
-                    MaterialPageRoute(builder: (context) => const Home(1))),
-                style: ButtonStyle(
-                  padding: const MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 25, horizontal: 35)),
-                  backgroundColor:
-                      MaterialStatePropertyAll(settings.getColor('green_btn')),
-                ),
-                child: const Text(
-                  'Meus produtos',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => EditPerfil(name, number, email))),
-                style: ButtonStyle(
-                  padding: const MaterialStatePropertyAll(
-                      EdgeInsets.symmetric(vertical: 25, horizontal: 40)),
-                  backgroundColor:
-                      MaterialStatePropertyAll(settings.getColor('green_btn')),
-                ),
-                child: const Text(
-                  'Editar perfil',
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-              ),
-            ],
+          ElevatedButton(
+            onPressed: () => Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const Home(1))),
+            style: const ButtonStyle(
+              padding: MaterialStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 25, horizontal: 60)),
+              backgroundColor:
+                  MaterialStatePropertyAll(Color(0xFF1E0B8E)),
+            ),
+            child: const Text(
+              'Meus produtos',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
+          ),
+          const SizedBox(height: 10),
+          ElevatedButton(
+            onPressed: () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => EditPerfil(name, number, email))),
+            style: ButtonStyle(
+              padding: const MaterialStatePropertyAll(
+                  EdgeInsets.symmetric(vertical: 25, horizontal: 72)),
+              backgroundColor:
+                  MaterialStatePropertyAll(settings.getColor('color_font')),
+            ),
+            child: const Text(
+              'Editar perfil',
+              style: TextStyle(color: Colors.white, fontSize: 16),
+            ),
           ),
           const SizedBox(height: 10),
           ElevatedButton(
             onPressed: () => logout(),
             style: const ButtonStyle(
               padding:  MaterialStatePropertyAll(
-                  EdgeInsets.symmetric(vertical: 25, horizontal: 60)),
+                  EdgeInsets.symmetric(vertical: 25, horizontal: 100)),
               backgroundColor:
                   MaterialStatePropertyAll(Colors.red),
             ),
