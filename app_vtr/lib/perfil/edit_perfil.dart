@@ -44,19 +44,22 @@ class _EditPerfilPage extends State<EditPerfilPage> {
   TextEditingController password = TextEditingController();
   TextEditingController cpf = TextEditingController();
   String base64Image = '';
+  String _img = '';
 
   uploadImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      File _img = File(image.path);
-      settings.postImageAuth(_img.path);
+      File _attimg = File(image.path);
+      settings.postImageAuth(_attimg.path);
+      // _img = _attimg.path;
     }
   }
 
   void defaultValues() async {
     var id_cpf = await data.getToken('cpf');
     var pass = await data.getToken('password');
+    _img = await data.getToken('foto');
     setState(() {
       name.text = widget.name;
       number.text = widget.number;
@@ -121,10 +124,10 @@ class _EditPerfilPage extends State<EditPerfilPage> {
                         vertical: 27, horizontal: 20),
                     backgroundColor: Colors.white,
                   ),
-                  child: const Icon(
-                    Icons.person_add,
-                    color: Colors.black,
-                    size: 36,
+                  child: Image.network(
+                    _img,
+                    height: 80,
+                    fit: BoxFit.cover,
                   ),
                 ),
                 ElevatedButton(

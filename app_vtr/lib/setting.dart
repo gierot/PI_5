@@ -41,7 +41,9 @@ class Settings {
           user['id'].toString(),
           user['telefone'],
           user['email'].toString(),
-          user['cpfcnpj'].toString());
+          user['cpfcnpj'].toString(),
+          user['foto'].toString()
+      );
       return true;
     }
     return false;

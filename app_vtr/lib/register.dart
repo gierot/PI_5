@@ -37,13 +37,16 @@ class _RegisterPage extends State<RegisterPage> {
   TextEditingController number = TextEditingController();
   TextEditingController password = TextEditingController();
   String base64Image = '';
+  String _img = '';
 
   uploadImage() async {
     final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
     if (image != null) {
-      File _img = File(image.path);
-      settings.postImage(_img.path);
+      File _attimg = File(image.path);
+      settings.postImage(_attimg.path);
+      _img = _attimg.path;
+      print(_img);
     }
   }
 
@@ -95,7 +98,13 @@ class _RegisterPage extends State<RegisterPage> {
                         vertical: 27, horizontal: 20),
                     backgroundColor: Colors.white,
                   ),
-                  child: const Icon(
+                  child: _img != null
+                      ? Image.network(
+                    _img,
+                    height: 80,
+                    fit: BoxFit.cover,
+                  )
+                      : Icon(
                     Icons.person_add,
                     color: Colors.black,
                     size: 36,
