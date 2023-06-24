@@ -41,11 +41,9 @@ class Settings {
     http.Response response = await http.post(Uri.parse(url + '/register'),
         headers: headers, body: jsonEncode(data));
 
-    if (response.statusCode == 200) {
-      var user = jsonDecode(response.body);
-      return true;
-    }
-    return false;
+    var user = jsonDecode(response.body);
+
+    return (user['error'] != null && response.statusCode == 200);
   }
 
   getProducts() async {
@@ -137,6 +135,31 @@ class Settings {
     return null;
   }
 
+  deleteForum(int id) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response =
+        await http.delete(Uri.parse(url + '/forums/$id'), headers: header);
+    var json = jsonDecode(response.body);
+    return (response.statusCode == 200 && json['error'] != null);
+  }
+
+  updateForum(int id, Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.put(Uri.parse(url + '/forums/$id'),
+        headers: header, body: jsonEncode(data));
+
+    var json = jsonDecode(response.body);
+    return (json['error'] == null && response.statusCode == 200);
+  }
+
   getComents(int id) async {
     String token = await user_vtr.getToken('token');
     Uri rota = Uri.parse(url + '/forums/$id');
@@ -148,6 +171,7 @@ class Settings {
     var json = jsonDecode(response.body);
 
     if (response.statusCode == 200) {
+      print(jsonEncode(json['data']));
       return json['data'];
     }
 
@@ -184,16 +208,51 @@ class Settings {
     return (json['error'] == null && response.statusCode == 200);
   }
 
+  deleteComent(int id) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http
+        .delete(Uri.parse(url + '/forums/comentarios/$id'), headers: header);
+    var json = jsonDecode(response.body);
+    return (response.statusCode == 200 && json['error'] != null);
+  }
+
+  updateComent(int id, Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    http.Response response = await http.put(
+        Uri.parse(url + '/forums/comentarios/$id'),
+        headers: header,
+        body: jsonEncode(data));
+
+    var json = jsonDecode(response.body);
+    return (response.statusCode == 200 && json['error'] != null);
+  }
+
   likeComent(data) async {
     String token = await user_vtr.getToken('token');
     Map<String, String> header = {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
-    http.Response response = await http.post(
-        Uri.parse(url + '/forums/comentarios/like'),
-        headers: header,
-        body: jsonEncode(data));
+    await http.post(Uri.parse(url + '/forums/comentarios/like'),
+        headers: header, body: jsonEncode(data));
+  }
+
+  unlikeComent(Map<String, dynamic> data) async {
+    String token = await user_vtr.getToken('token');
+    Map<String, String> header = {
+      'Content-Type': 'application/json',
+      'Authorization': 'Bearer $token'
+    };
+    await http.delete(Uri.parse(url + '/forums/comentarios/like'),
+        headers: header, body: jsonEncode(data));
   }
 
   updatePerfil(Map<String, dynamic> data) async {
