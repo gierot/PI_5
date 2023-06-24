@@ -139,7 +139,7 @@ class _ForumPage extends State<ForumPage> {
           const SizedBox(height: 20),
           Container(
               margin: const EdgeInsets.symmetric(horizontal: 40),
-              padding: const EdgeInsets.symmetric(horizontal: 40),
+              padding: const EdgeInsets.symmetric(vertical: 5),
               child: ElevatedButton(
                 onPressed: () {
                   showModalBottomSheet(
@@ -239,9 +239,13 @@ class _ForumPage extends State<ForumPage> {
                 },
                 style: ButtonStyle(
                   padding: MaterialStateProperty.all(
-                      const EdgeInsets.symmetric(horizontal: 10, vertical: 25)),
-                  backgroundColor: MaterialStateProperty.all(
-                      settings.getColor('color_font')),
+                      const EdgeInsets.symmetric(vertical: 25, horizontal: 10)),
+                  backgroundColor: MaterialStateProperty.all(settings.getColor('color_font')),
+                  shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+                    RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20), // Defina o raio desejado aqui
+                    ),
+                  ),
                 ),
                 child: const Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -255,10 +259,8 @@ class _ForumPage extends State<ForumPage> {
                 dynamic item = forums[index];
                 if (item != null) {
                   return Container(
-                      padding: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 50),
-                      margin: const EdgeInsets.symmetric(
-                          vertical: 5, horizontal: 50),
+                      padding: const EdgeInsets.symmetric(vertical: 5),
+                      margin: const EdgeInsets.symmetric(vertical: 5),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
