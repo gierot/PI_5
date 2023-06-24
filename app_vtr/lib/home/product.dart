@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:app_vtr/top.dart';
@@ -51,7 +53,6 @@ class _ProductPage extends State<ProductPage> {
   TextEditingController email_user = TextEditingController();
   var manual = '';
   var garantia;
-  var error = false;
 
   void _launchURL() async {
     var url = widget.redirect_product;
@@ -95,19 +96,25 @@ class _ProductPage extends State<ProductPage> {
   }
 
   void getManual() async {
-    manual = await settings.getManual(1);
+    var values = await settings.getManual(1);
+    setState(() {
+      manual = values;
+    });
   }
 
   void getGarantias() async {
-    garantia = await settings.getGarantia();
+    var values = await settings.getGarantia();
+    setState(() {
+      garantia = values.firstWhere((item) => item['id'] == widget.id,
+          orElse: () => null);
+      ;
+    });
+    print(garantia);
   }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      error = false;
-    });
     getManual();
     getGarantias();
   }
@@ -265,20 +272,36 @@ class _ProductPage extends State<ProductPage> {
                       builder: (BuildContext context) {
                         return Container(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               const SizedBox(height: 16.0),
                               Text(
-                                garantia[widget.id - 1]['nome'].toString(),
+                                garantia['nome'].toString(),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
                                 ),
                                 textAlign: TextAlign.center,
                               ),
-                              const SizedBox(height: 16.0),
                               Text(
-                                garantia[widget.id - 1]['hash'].toString(),
+                                garantia['hash'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                'validade até : ' + garantia['validade'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              Text(
+                                'Data de compra: ' + garantia['data_compra'].toString(),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
