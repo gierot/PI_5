@@ -70,17 +70,16 @@ class _HomePage extends State<HomePage> {
                     onTap: () => Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => Product(
-                              widget.is_user == 0 ? item['id'] : item['usuario_produto_id'],
-                              item['nome'].toString(),
-                              item['descricao'].toString(),
-                              item['caminho'].toString(),
-                              item['link_video'].toString(),
-                              item['link'].toString(),
-                              widget.is_user
-                            )
-                          )
-                        ),
+                            builder: (context) => Product(
+                                item['id'],
+                                item['nome'].toString(),
+                                item['descricao'].toString(),
+                                item['caminho'].toString(),
+                                item['link_video'].toString(),
+                                item['link'].toString(),
+                                widget.is_user,
+                                widget.is_user == 0 ? 0 : item['usuario_produto_id']
+                            ))),
                     child: Image.network(
                       item['caminho'],
                       height: 150,

@@ -179,6 +179,8 @@ class Settings {
 
     var body = jsonDecode(response.body);
 
+    print(response.statusCode);
+
     return (response.statusCode == 200 && body['error'] == null);
   }
 
@@ -208,7 +210,6 @@ class Settings {
     http.Response response =
         await http.delete(Uri.parse(url + '/forums/$id'), headers: header);
 
-    print(response.statusCode);
     return (response.statusCode == 200);
   }
 

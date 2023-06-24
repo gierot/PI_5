@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:app_vtr/setting.dart';
 import 'package:app_vtr/top.dart';
@@ -18,15 +20,16 @@ class Product extends StatelessWidget {
   final String image;
   final String redirect_product;
   final int is_user;
+  final int id_user;
 
   const Product(this.id, this.name, this.info_text, this.image, this.link_video,
-      this.redirect_product, this.is_user);
+      this.redirect_product, this.is_user, this.id_user);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProductPage(
-          id, name, info_text, image, link_video, redirect_product, is_user),
+      home: ProductPage(id, name, info_text, image, link_video,
+          redirect_product, is_user, id_user),
     );
   }
 }
@@ -39,9 +42,10 @@ class ProductPage extends StatefulWidget {
   final String image;
   final String redirect_product;
   final int is_user;
+  final id_user;
 
   const ProductPage(this.id, this.name, this.info_text, this.image,
-      this.link_video, this.redirect_product, this.is_user);
+      this.link_video, this.redirect_product, this.is_user, this.id_user);
 
   @override
   State<ProductPage> createState() => _ProductPage();
@@ -51,7 +55,6 @@ class _ProductPage extends State<ProductPage> {
   TextEditingController email_user = TextEditingController();
   var manual = '';
   var garantia;
-  var error = false;
 
   void _launchURL() async {
     var url = widget.redirect_product;
@@ -72,7 +75,7 @@ class _ProductPage extends State<ProductPage> {
     }
     Map<String, String> body = {
       'new_user_email': email_user.text,
-      'usuario_produto_id': widget.id.toString()
+      'usuario_produto_id': widget.id_user.toString()
     };
 
     var response = await settings.sendProduct(body);
@@ -95,19 +98,23 @@ class _ProductPage extends State<ProductPage> {
   }
 
   void getManual() async {
-    manual = await settings.getManual(1);
+    var values = await settings.getManual(1);
+    setState(() {
+      manual = values;
+    });
   }
 
   void getGarantias() async {
-    garantia = await settings.getGarantia();
+    var values = await settings.getGarantia();
+    setState(() {
+      garantia = values.firstWhere((item) => item['id'] == widget.id,
+          orElse: () => null);
+    });
   }
 
   @override
   void initState() {
     super.initState();
-    setState(() {
-      error = false;
-    });
     getManual();
     getGarantias();
   }
@@ -237,7 +244,33 @@ class _ProductPage extends State<ProductPage> {
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: sendProduct,
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Confirmação'),
+                                            content: const Text(
+                                                'Deseja confirmar esta ação?'),
+                                            actions: [
+                                              TextButton(
+                                                child: Text('Cancelar'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text('Confirmar'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  sendProduct();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: const Text('Transferir'),
                                   ),
                                 ],
@@ -265,25 +298,83 @@ class _ProductPage extends State<ProductPage> {
                       builder: (BuildContext context) {
                         return Container(
                           child: Column(
-                            mainAxisSize: MainAxisSize.min,
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.max,
                             children: [
                               const SizedBox(height: 16.0),
-                              Text(
-                                garantia[widget.id - 1]['nome'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  garantia['nome'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
-                              const SizedBox(height: 16.0),
-                              Text(
-                                garantia[widget.id - 1]['hash'].toString(),
-                                style: const TextStyle(
-                                  color: Colors.black,
-                                  fontSize: 16,
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
                                 ),
-                                textAlign: TextAlign.center,
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  garantia['hash'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Validade até: ' +
+                                      garantia['validade'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
+                              ),
+                              Container(
+                                decoration: BoxDecoration(
+                                  border: Border.all(
+                                    color: Colors.green,
+                                    width: 2.0,
+                                  ),
+                                  borderRadius: BorderRadius.circular(10.0),
+                                ),
+                                padding: const EdgeInsets.all(8.0),
+                                child: Text(
+                                  'Data de compra: ' +
+                                      garantia['data_compra'].toString(),
+                                  style: const TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16,
+                                  ),
+                                  textAlign: TextAlign.center,
+                                ),
                               ),
                               const SizedBox(height: 16.0),
                               Text(
