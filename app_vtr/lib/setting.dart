@@ -7,7 +7,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 DataUser user_vtr = DataUser();
 
 class Settings {
-  String url = 'http://18.228.214.223/api';
+  String url = 'http://192.168.15.58:8000/api';
   Map<String, String> headers = {'Content-Type': 'application/json'};
   String _imagePath = '';
 
@@ -330,6 +330,9 @@ class Settings {
     http.Response response = await http.put(Uri.parse(url + '/perfis'),
         headers: header, body: jsonEncode(data));
 
+    if (response.statusCode == 200) {
+      user_vtr.updateToken(_imagePath, 'foto');
+    }
     return response.statusCode == 200 ? true : false;
   }
 
@@ -346,10 +349,8 @@ class Settings {
     if(response.statusCode == 200) {
       String _response = await response.stream.bytesToString();
       _imagePath = jsonDecode(_response)['data'];
-    } else {
-      String _response = await response.stream.bytesToString();
+      return _imagePath;
     }
-
   }
 
   postImage(String imagepath) async {
@@ -365,8 +366,7 @@ class Settings {
     if(response.statusCode == 200) {
       String _response = await response.stream.bytesToString();
       _imagePath = jsonDecode(_response)['data'];
-    } else {
-      String _response = await response.stream.bytesToString();
+      return _imagePath;
     }
 
   }

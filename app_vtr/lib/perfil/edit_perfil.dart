@@ -51,8 +51,14 @@ class _EditPerfilPage extends State<EditPerfilPage> {
 
     if (image != null) {
       File _attimg = File(image.path);
-      settings.postImageAuth(_attimg.path);
-      // _img = _attimg.path;
+      var img = await settings.postImageAuth(_attimg.path);
+      print(img);
+      setState(() {
+        _img = img;
+      });
+      if(_img == null) {
+        _img = await data.getToken('foto');
+      }
     }
   }
 
@@ -114,20 +120,20 @@ class _EditPerfilPage extends State<EditPerfilPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
-                ElevatedButton(
-                  onPressed: () => uploadImage(),
-                  style: ElevatedButton.styleFrom(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(40.0),
+                InkWell(
+                  onTap: ()=>uploadImage(),
+                  child: Container(
+                    width: 100,
+                    height: 100,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
                     ),
-                    padding: const EdgeInsets.symmetric(
-                        vertical: 27, horizontal: 20),
-                    backgroundColor: Colors.white,
-                  ),
-                  child: Image.network(
-                    _img,
-                    height: 80,
-                    fit: BoxFit.cover,
+                    child: ClipOval(
+                      child: Image.network(
+                        _img,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
                   ),
                 ),
                 ElevatedButton(

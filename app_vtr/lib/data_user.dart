@@ -22,6 +22,11 @@ class DataUser {
     return key;
   }
 
+  updateToken(value, token) async {
+    await storage.delete(key: token);
+    await storage.write(key: token, value: value);
+  }
+
   destroyUser() {
     storage.delete(key: 'token');
     storage.delete(key: 'name');
