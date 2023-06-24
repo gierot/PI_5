@@ -5,6 +5,8 @@ import 'package:app_vtr/buttons.dart';
 import 'package:app_vtr/render_video.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:app_vtr/home/home.dart';
+import 'package:app_vtr/message.dart';
+import 'dart:async';
 
 Settings settings = Settings();
 
@@ -61,6 +63,13 @@ class _ProductPage extends State<ProductPage> {
   }
 
   sendProduct() async {
+    Navigator.pop(context);
+    if (email_user.text.isEmpty) {
+      MessageSnackBar(
+          'Não foi possivel transferir o produto, pois, não há email para o envio!',
+          1);
+      return;
+    }
     Map<String, String> body = {
       'new_user_email': email_user.text,
       'usuario_produto_id': widget.id.toString()
@@ -68,31 +77,21 @@ class _ProductPage extends State<ProductPage> {
 
     var response = await settings.sendProduct(body);
 
-    if (response == true) {
-      setState(() { error = false; });
-      Navigator.push(
-          context, MaterialPageRoute(builder: (context) => const Home(1)));
-    } else {
-      setState(() {
-        error = true;
-      });
-      // ScaffoldMessenger.of(context).showSnackBar(
-      //   SnackBar(
-      //     behavior: SnackBarBehavior.floating,
-      //     backgroundColor: Colors.red,
-      //     elevation: 10000,
-      //     content: Container(
-      //       padding: const EdgeInsets.symmetric(horizontal: 0),
-      //       width: 600, // Define um tamanho fixo para o SnackBar
-      //       child: const Text(
-      //         'Não foi possivel enviar o produto! Por favor verifique o email do destinatario.',
-      //         textAlign: TextAlign.center,
-      //         style: TextStyle(color: Colors.white, fontSize: 16),
-      //       ),
-      //     ),
-      //   ),
-      // );
+    if (!response) {
+      MessageSnackBar(
+          'Não foi possivel transferir o produto, pois, não há email para o envio!',
+          1);
+      return;
     }
+    MessageSnackBar('Produto enviado com sucesso!', 2).show(context);
+    Timer(const Duration(seconds: 3), () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const Home(1),
+        ),
+      );
+    });
   }
 
   void getManual() async {
@@ -106,7 +105,9 @@ class _ProductPage extends State<ProductPage> {
   @override
   void initState() {
     super.initState();
-    setState(() { error = false; });
+    setState(() {
+      error = false;
+    });
     getManual();
     getGarantias();
   }
@@ -118,7 +119,8 @@ class _ProductPage extends State<ProductPage> {
       appBar: Top(),
       body: SingleChildScrollView(
           child: Center(
-        child: Column(children: [
+        child:
+            Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -241,28 +243,13 @@ class _ProductPage extends State<ProductPage> {
                                 ],
                               ),
                             ),
-                            if (error == true)
-                              Positioned(
-                                top: 0,
-                                left: 0,
-                                right: 0,
-                                child: Container(
-                                  // Seu componente de mensagem de alerta
-                                  color: Colors.red,
-                                  padding: const EdgeInsets.all(16),
-                                  child: const Text(
-                                    'Por favor verifique o email do destinatario.',
-                                    style: TextStyle(color: Colors.white),
-                                  ),
-                                ),
-                              ),
                           ],
                         );
                       },
                     );
                   },
                 ),
-              if(widget.is_user == 1)
+              if (widget.is_user == 1)
                 ElevatedButton(
                   style: ButtonStyle(
                       backgroundColor: MaterialStateColor.resolveWith(

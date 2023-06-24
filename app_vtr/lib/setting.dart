@@ -112,10 +112,7 @@ class Settings {
 
     var body = jsonDecode(response.body);
 
-    if (response.statusCode == 200 && body['data'] != null) {
-      return true;
-    }
-    return false;
+    return (response.statusCode == 200 && body['error'] == null);
   }
 
   getForums() async {
