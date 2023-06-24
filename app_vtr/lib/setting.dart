@@ -9,6 +9,7 @@ DataUser user_vtr = DataUser();
 class Settings {
   String url = 'http://18.228.214.223/api';
   Map<String, String> headers = {'Content-Type': 'application/json'};
+  String _imagePath = '';
 
   var all_colors = {
     'background': const Color(0xFF04121F),
@@ -47,6 +48,8 @@ class Settings {
   }
 
   registerUser(Map<String, String> data) async {
+
+    data['foto_perfil'] = _imagePath;
     http.Response response = await http.post(Uri.parse(url + '/register'),
         headers: headers, body: jsonEncode(data));
 
@@ -264,24 +267,48 @@ class Settings {
       'Content-Type': 'application/json',
       'Authorization': 'Bearer $token'
     };
+    data['foto_perfil'] = _imagePath;
     http.Response response = await http.put(Uri.parse(url + '/perfis'),
         headers: header, body: jsonEncode(data));
 
     return response.statusCode == 200 ? true : false;
   }
 
-  postImage(String imagepath) async{
+  postImageAuth(String imagepath) async{
     String token = await user_vtr.getToken('token');
     Map<String, String> header = {
       'Content-Type': 'multipart/form-data',
       'Authorization': 'Bearer $token'
     };
-    
     var request = http.MultipartRequest('POST', Uri.parse(url + '/perfis/image'))
                    ..headers.addAll(header)
                    ..files.add(await http.MultipartFile.fromPath('image', imagepath));
     var response = await request.send();
-    print(response.statusCode);
+    if(response.statusCode == 200) {
+      String _response = await response.stream.bytesToString();
+      _imagePath = jsonDecode(_response)['data'];
+    } else {
+      String _response = await response.stream.bytesToString();
+    }
+
+  }
+
+  postImage(String imagepath) async {
+
+    Map<String, String> header = {
+      'Content-Type': 'multipart/form-data'
+    };
+
+    var request = http.MultipartRequest('POST', Uri.parse(url + '/register/image'))
+      ..headers.addAll(header)
+      ..files.add(await http.MultipartFile.fromPath('image', imagepath));
+    var response = await request.send();
+    if(response.statusCode == 200) {
+      String _response = await response.stream.bytesToString();
+      _imagePath = jsonDecode(_response)['data'];
+    } else {
+      String _response = await response.stream.bytesToString();
+    }
 
   }
 }

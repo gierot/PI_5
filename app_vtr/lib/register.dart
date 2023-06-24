@@ -43,13 +43,7 @@ class _RegisterPage extends State<RegisterPage> {
 
     if (image != null) {
       File _img = File(image.path);
-      // print(Text(_img.path));
       settings.postImage(_img.path);
-      // final imageBytes = await image.readAsBytes();
-      // setState(() {
-      //   base64Image = base64Encode(imageBytes);
-      // });
-      // print(base64Image);
     }
   }
 
