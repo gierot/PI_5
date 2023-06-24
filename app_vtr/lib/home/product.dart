@@ -20,15 +20,16 @@ class Product extends StatelessWidget {
   final String image;
   final String redirect_product;
   final int is_user;
+  final int id_user;
 
   const Product(this.id, this.name, this.info_text, this.image, this.link_video,
-      this.redirect_product, this.is_user);
+      this.redirect_product, this.is_user, this.id_user);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: ProductPage(
-          id, name, info_text, image, link_video, redirect_product, is_user),
+      home: ProductPage(id, name, info_text, image, link_video,
+          redirect_product, is_user, id_user),
     );
   }
 }
@@ -41,9 +42,10 @@ class ProductPage extends StatefulWidget {
   final String image;
   final String redirect_product;
   final int is_user;
+  final id_user;
 
   const ProductPage(this.id, this.name, this.info_text, this.image,
-      this.link_video, this.redirect_product, this.is_user);
+      this.link_video, this.redirect_product, this.is_user, this.id_user);
 
   @override
   State<ProductPage> createState() => _ProductPage();
@@ -73,7 +75,7 @@ class _ProductPage extends State<ProductPage> {
     }
     Map<String, String> body = {
       'new_user_email': email_user.text,
-      'usuario_produto_id': widget.id.toString()
+      'usuario_produto_id': widget.id_user.toString()
     };
 
     var response = await settings.sendProduct(body);
@@ -107,9 +109,7 @@ class _ProductPage extends State<ProductPage> {
     setState(() {
       garantia = values.firstWhere((item) => item['id'] == widget.id,
           orElse: () => null);
-      ;
     });
-    print(garantia);
   }
 
   @override
@@ -244,7 +244,33 @@ class _ProductPage extends State<ProductPage> {
                                     ),
                                   ),
                                   ElevatedButton(
-                                    onPressed: sendProduct,
+                                    onPressed: () {
+                                      showDialog(
+                                        context: context,
+                                        builder: (BuildContext context) {
+                                          return AlertDialog(
+                                            title: Text('Confirmação'),
+                                            content: const Text(
+                                                'Deseja confirmar esta ação?'),
+                                            actions: [
+                                              TextButton(
+                                                child: Text('Cancelar'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                },
+                                              ),
+                                              TextButton(
+                                                child: Text('Confirmar'),
+                                                onPressed: () {
+                                                  Navigator.pop(context);
+                                                  sendProduct();
+                                                },
+                                              ),
+                                            ],
+                                          );
+                                        },
+                                      );
+                                    },
                                     child: const Text('Transferir'),
                                   ),
                                 ],
@@ -322,7 +348,8 @@ class _ProductPage extends State<ProductPage> {
                                 ),
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Validade até: ' + garantia['validade'].toString(),
+                                  'Validade até: ' +
+                                      garantia['validade'].toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,
@@ -340,7 +367,8 @@ class _ProductPage extends State<ProductPage> {
                                 ),
                                 padding: const EdgeInsets.all(8.0),
                                 child: Text(
-                                  'Data de compra: ' + garantia['data_compra'].toString(),
+                                  'Data de compra: ' +
+                                      garantia['data_compra'].toString(),
                                   style: const TextStyle(
                                     color: Colors.black,
                                     fontSize: 16,

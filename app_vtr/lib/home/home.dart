@@ -48,7 +48,6 @@ class _HomePage extends State<HomePage> {
     setState(() {
       products = values;
     });
-    print(products);
   }
 
   @override
@@ -78,7 +77,9 @@ class _HomePage extends State<HomePage> {
                                 item['caminho'].toString(),
                                 item['link_video'].toString(),
                                 item['link'].toString(),
-                                widget.is_user))),
+                                widget.is_user,
+                                widget.is_user == 0 ? 0 : item['usuario_produto_id']
+                            ))),
                     child: Image.network(
                       item['caminho'],
                       height: 150,
