@@ -270,7 +270,7 @@ class _ProductPage extends State<ProductPage> {
                       padding: MaterialStateProperty.all(
                           const EdgeInsets.symmetric(
                               vertical: 20, horizontal: 25))),
-                  child: const Text('garantia',
+                  child: const Text('Garantia',
                       style: TextStyle(color: Colors.white)),
                   onPressed: () {
                     showModalBottomSheet(
@@ -292,6 +292,15 @@ class _ProductPage extends State<ProductPage> {
                               const SizedBox(height: 16.0),
                               Text(
                                 garantia[widget.id - 1]['hash'].toString(),
+                                style: const TextStyle(
+                                  color: Colors.black,
+                                  fontSize: 16,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                              const SizedBox(height: 16.0),
+                              Text(
+                                garantia[widget.id - 1]['validade'].toString(),
                                 style: const TextStyle(
                                   color: Colors.black,
                                   fontSize: 16,
